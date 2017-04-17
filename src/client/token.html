@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <script>
+            function setCookie(name, value, options) {
+                options = options || {};
+
+                var expires = options.expires;
+
+                if (typeof expires == "number" && expires) {
+                    var d = new Date();
+                    d.setTime(d.getTime() + expires * 1000);
+                    expires = options.expires = d;
+                }
+                if (expires && expires.toUTCString) {
+                    options.expires = expires.toUTCString();
+                }
+
+                value = encodeURIComponent(value);
+
+                var updatedCookie = name + "=" + value;
+
+                for (var propName in options) {
+                    updatedCookie += "; " + propName;
+                    var propValue = options[propName];
+                    if (propValue !== true) {
+                    updatedCookie += "=" + propValue;
+                    }
+                }
+
+                document.cookie = updatedCookie;
+            }
+
+            var tokenMatch = /access_token=([^&]+)/.exec(document.location.hash);
+            if(!tokenMatch) {
+                throw Error();
+            } else {
+                var token = tokenMatch[1];
+                setCookie("access_token", token, { expires: 0 });
+                location.href = "/";
+            }
+        </script>
+    </body>
+</html>

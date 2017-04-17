@@ -1,0 +1,29 @@
+{
+  "name": "tagged_gallery",
+  "version": "1.0.0",
+  "description": "Gallery of images which allow assigning multiple tags to an image",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "nsp check",
+    "start": "nodemon --watch src --exec npm run start:app",
+    "start:app": "babel-node --debug ./src/server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ivan Iakimov",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "nsp": "^2.6.3"
+  },
+  "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.25",
+    "node-fetch": "^1.6.3"
+  }
+}
