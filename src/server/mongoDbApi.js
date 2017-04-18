@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb';
+import _ from 'lodash';
 
 import config from '../config/configuration';
 
@@ -43,12 +44,14 @@ export default class MongoDbApi {
                 return new Promise(function (resolve, reject) {
                     const imageTags = db.collection(config.mongoDbCollection);
 
-                    imageTags.find({ "tags": { "$all": tagsArray } }).skip(offset).limit(limit).toArray(function (err, data) {
+                    const tagsRegexes = _(tagsArray).map(t => new RegExp('^' + t, 'i')).value();
+
+                    imageTags.find({ "tags": { "$all": tagsRegexes } }).skip(offset).limit(limit).toArray(function (err, data) {
                         if (err) {
                             reject(err);
                         }
                         else {
-                            imageTags.count({ "tags": { "$all": tagsArray } })
+                            imageTags.count({ "tags": { "$all": tagsRegexes } })
                                 .then(function (total) {
                                     resolve({
                                         "items": data,
