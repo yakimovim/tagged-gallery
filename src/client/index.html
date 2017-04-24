@@ -80,42 +80,44 @@
         }
 
         function getThumbnailsDataWithUntagged(limit, offset) {
-            $.get(`/api/untagged?limit=${limit}&offset=${offset}`)
-                .done(function (data) {
-                    generateThumbnails(data);
-                    attachClickHandlers();
-                })
-                .fail(function () {
-                    console.error("Can't get preview of untagged images");
-                });
+            $.ajax({
+                url: `/api/untagged?limit=${limit}&offset=${offset}`,
+                timeout: 600000
+            }).done(function (data) {
+                generateThumbnails(data);
+                attachClickHandlers();
+            })
+            .fail(function () {
+                console.error("Can't get preview of untagged images");
+            });
         }
 
-        $('#prevButton').click(function() {
+        $('#prevButton').click(function () {
             offset -= limit;
-            if(offset < 0) {
+            if (offset < 0) {
                 offset = 0;
             }
             getThumbnailsData($('#searchTextbox').val(), limit, offset);
         });
 
-        $('#nextButton').click(function() {
+        $('#nextButton').click(function () {
             offset += limit;
-            if(offset > total) {
+            if (offset > total) {
                 offset -= limit;
-                if(offset < 0) {
+                if (offset < 0) {
                     offset = 0;
                 }
             }
             getThumbnailsData($('#searchTextbox').val(), limit, offset);
         });
 
-        $('#searchButton').click(function() {
+        $('#searchButton').click(function () {
             $('#bigImage').empty();
             offset = 0;
             getThumbnailsData($('#searchTextbox').val(), limit, offset);
         });
 
-        $('#untaggedButton').click(function() {
+        $('#untaggedButton').click(function () {
             $('#bigImage').empty();
             offset = 0;
             getThumbnailsDataWithUntagged(limit, offset);
@@ -123,7 +125,7 @@
 
         var token = getCookie("access_token");
         if (!token) {
-            $.get('/api/clientId').then(function(clientId) {
+            $.get('/api/clientId').then(function (clientId) {
                 location.href = "https://oauth.yandex.ru/authorize?response_type=token&client_id=" + clientId;
             });
         } else {
