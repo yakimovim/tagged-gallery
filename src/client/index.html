@@ -80,16 +80,22 @@
         }
 
         function getThumbnailsDataWithUntagged(limit, offset) {
-            $.ajax({
-                url: `/api/untagged?limit=${limit}&offset=${offset}`,
-                timeout: 600000
-            }).done(function (data) {
-                generateThumbnails(data);
-                attachClickHandlers();
-            })
-            .fail(function () {
-                console.error("Can't get preview of untagged images");
-            });
+            $.get(`/api/untagged?limit=${limit}&offset=${offset}`)
+                .done(function (data) {
+                    if(!!data.readNext) {
+                        setTimeout(function() {
+                            offset += limit;
+                            console.log("Reading next from " + offset);
+                            getThumbnailsDataWithUntagged(limit, offset);
+                        }, 10);
+                    } else {
+                        generateThumbnails(data);
+                        attachClickHandlers();
+                    }
+                })
+                .fail(function () {
+                    console.error("Can't get preview of untagged images");
+                });
         }
 
         $('#prevButton').click(function () {

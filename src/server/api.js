@@ -35,11 +35,9 @@ export default class TaggedGalleryApi {
                 if(_.some(data.items, i => i.tags.length === 0)) {
                     return data;
                 } else {
-                    if(offset + limit >= data.total) {
-                        return data;
-                    } else {
-                        return that.getImagePreviewsWithImageWithNoTags(limit, offset + limit);
-                    }
+                    return { 
+                        "readNext": true 
+                    };
                 }
             });
     }

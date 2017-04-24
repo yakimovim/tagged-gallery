@@ -1,7 +1,6 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import timeout from 'connect-timeout';
 import YandexDiskApi from './yandexDiskApi';
 import TaggedGalleryApi from './api';
 
@@ -25,7 +24,7 @@ app.get('/api/preview', function (req, res) {
         });
 });
 
-app.get('/api/untagged', timeout('600s'), function (req, res) {
+app.get('/api/untagged', function (req, res) {
     const api = new TaggedGalleryApi(req.cookies.access_token);
     api.getImagePreviewsWithImageWithNoTags(req.query.limit, req.query.offset)
         .then(function (data) {
