@@ -26,6 +26,24 @@ export default class TaggedGalleryApi {
         }
     }
 
+    getImagePreviewsWithImageWithNoTags(limit = 10, offset = 0) {
+        limit = _.toInteger(limit);
+        offset = _.toInteger(offset);
+        const that = this;
+        return this.getImagePreviewsWithAnyTags(limit, offset)
+            .then(function(data) {
+                if(_.some(data.items, i => i.tags.length === 0)) {
+                    return data;
+                } else {
+                    if(offset + limit >= data.total) {
+                        return data;
+                    } else {
+                        return that.getImagePreviewsWithImageWithNoTags(limit, offset + limit);
+                    }
+                }
+            });
+    }
+
     getImagePreviewsWithAnyTags(limit = 10, offset = 0) {
         const that = this;
         const api = new YandexDiskApi(that._oAuthToken);

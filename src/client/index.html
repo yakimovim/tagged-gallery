@@ -15,6 +15,7 @@
     <div>
         <input type="text" id="searchTextbox" />
         <button id="searchButton">Search</button>
+        <button id="untaggedButton">Find untagged</button>
     </div>
     <div id="thumbnails"></div>
     <div style="clear: both">
@@ -78,6 +79,17 @@
                 });
         }
 
+        function getThumbnailsDataWithUntagged(limit, offset) {
+            $.get(`/api/untagged?limit=${limit}&offset=${offset}`)
+                .done(function (data) {
+                    generateThumbnails(data);
+                    attachClickHandlers();
+                })
+                .fail(function () {
+                    console.error("Can't get preview of untagged images");
+                });
+        }
+
         $('#prevButton').click(function() {
             offset -= limit;
             if(offset < 0) {
@@ -101,6 +113,12 @@
             $('#bigImage').empty();
             offset = 0;
             getThumbnailsData($('#searchTextbox').val(), limit, offset);
+        });
+
+        $('#untaggedButton').click(function() {
+            $('#bigImage').empty();
+            offset = 0;
+            getThumbnailsDataWithUntagged(limit, offset);
         });
 
         var token = getCookie("access_token");

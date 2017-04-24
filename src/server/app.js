@@ -24,6 +24,14 @@ app.get('/api/preview', function (req, res) {
         });
 });
 
+app.get('/api/untagged', function (req, res) {
+    const api = new TaggedGalleryApi(req.cookies.access_token);
+    api.getImagePreviewsWithImageWithNoTags(req.query.limit, req.query.offset)
+        .then(function (data) {
+            res.json(data);
+        });
+});
+
 app.get('/api/image', function (req, res) {
     const api = new YandexDiskApi(req.cookies.access_token);
     api.getFullImage(req.query.fileName)
