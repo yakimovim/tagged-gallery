@@ -1,6 +1,9 @@
 {
   "name": "tagged_gallery",
   "version": "1.0.0",
+  "engines": {
+    "node": "7.9.0"
+  },
   "description": "Gallery of images which allow assigning multiple tags to an image",
   "main": "index.js",
   "scripts": {
