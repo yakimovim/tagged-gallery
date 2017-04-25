@@ -21,49 +21,47 @@ export default class YandexDiskApi {
         }
     }
 
-    getImagePreviews(limit = 10, offset = 0) {
-        return this._get(`${config.yandexDiskApiUrl}?path=${encodeURI(config.yandexDiskFolder)}&limit=${limit}&offset=${offset}`)
-            .then(function (data) {
-                return data.json();
-            })
-            .then(function (data) {
-                var embedded = data._embedded;
-                return {
-                    "items": _(embedded.items || []).filter(i => i.type === 'file').value(),
-                    "limit": embedded.limit,
-                    "offset": embedded.offset,
-                    "total": embedded.total
-                };
-            })
-            .catch(function (error) {
-                console.error("Can't get preview data");
-            });
+    async getImagePreviews(limit = 10, offset = 0) {
+        try {
+            const data = await this._get(`${config.yandexDiskApiUrl}?path=${encodeURI(config.yandexDiskFolder)}&limit=${limit}&offset=${offset}`);
+
+            const jsonData = await data.json();
+
+            const embedded = jsonData._embedded;
+
+            return {
+                "items": _(embedded.items || []).filter(i => i.type === 'file').value(),
+                "limit": embedded.limit,
+                "offset": embedded.offset,
+                "total": embedded.total
+            };
+        } catch(err) {
+            console.log("Can't get preview data: " + err);
+        }
     }
 
-    getImagePreview(fileName) {
-        return this._get(`${config.yandexDiskApiUrl}?path=${encodeURI(config.yandexDiskFolder + fileName)}`)
-            .then(function (data) {
-                return data.json();
-            })
-            .catch(function (error) {
-                console.error("Can't get preview data");
-            });
+    async getImagePreview(fileName) {
+        try {
+            const data = await this._get(`${config.yandexDiskApiUrl}?path=${encodeURI(config.yandexDiskFolder + fileName)}`);
+
+            return await data.json();
+        } catch (err) {
+            console.error("Can't get preview data: " + err);
+        }
     }
 
-    getFullImage(name) {
-        return this._get(`${config.yandexDiskApiUrl}/download?path=${encodeURI(config.yandexDiskFolder + name)}`)
-            .then(function (data) {
-                return data.json();
-            })
-            .then(function (data) {
-                return {
-                    "href": data.href
-                };
-            })
-            .catch(function (error) {
-                console.error("Can't get image data");
-            });
+    async getFullImage(name) {
+        try {
+            const data = await this._get(`${config.yandexDiskApiUrl}/download?path=${encodeURI(config.yandexDiskFolder + name)}`);
 
+            const jsonData = await data.json();
+
+            return {
+                    "href": jsonData.href
+                };
+        } catch (err) {
+            console.error("Can't get image data: " + err);
+        }
     }
 }
 

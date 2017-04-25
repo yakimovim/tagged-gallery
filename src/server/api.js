@@ -26,77 +26,62 @@ export default class TaggedGalleryApi {
         }
     }
 
-    getImagePreviewsWithImageWithNoTags(limit = 10, offset = 0) {
+    async getImagePreviewsWithImageWithNoTags(limit = 10, offset = 0) {
         limit = _.toInteger(limit);
         offset = _.toInteger(offset);
-        const that = this;
-        return this.getImagePreviewsWithAnyTags(limit, offset)
-            .then(function(data) {
-                if(_.some(data.items, i => i.tags.length === 0)) {
-                    return data;
-                } else {
-                    return { 
-                        "readNext": true 
-                    };
-                }
-            });
+
+        const imagesWithTags = await this.getImagePreviewsWithAnyTags(limit, offset);
+
+        if (_.some(imagesWithTags.items, i => i.tags.length === 0)) {
+            return imagesWithTags;
+        } else {
+            return {
+                "readNext": true
+            };
+        }
     }
 
-    getImagePreviewsWithAnyTags(limit = 10, offset = 0) {
-        const that = this;
-        const api = new YandexDiskApi(that._oAuthToken);
-        return api.getImagePreviews(limit, offset)
-            .then(function (data) {
-                const fileNames = _.map(data.items, i => i.name);
-                return that._mongoApi.getTagsOfFiles(fileNames)
-                    .then(function (tags) {
-                        _.forEach(data.items, i => {
-                            const tagsItem = _.find(tags, t => t.name === i.name);
-                            if (tagsItem) {
-                                i.tags = tagsItem.tags;
-                            } else {
-                                i.tags = '';
-                            }
-                        });
-                        return data;
-                    })
-            });
-    }
+    async getImagePreviewsWithAnyTags(limit = 10, offset = 0) {
+        const api = new YandexDiskApi(this._oAuthToken);
 
-    getImagePreviewsWithGivenTags(tagsArray, limit = 10, offset = 0) {
-        const that = this;
-        return this._mongoApi.getFilesWithTags(tagsArray, _.toNumber(limit), _.toNumber(offset))
-            .then(function (data) {
-                const api = new YandexDiskApi(that._oAuthToken);
-                return Promise.all(_(data.items).map(i => api.getImagePreview(i.name)).value())
-                    .then(function (previews) {
-                        data.items = _(data.items).map(mi => {
-                            const preview = _.find(previews, p => p.name === mi.name);
-                            preview.tags = mi.tags;
-                            return preview;
-                        })
-                            .filter(i => !!i)
-                            .value();
-                        return data;
-                    });
-            });
-    }
+        const imageData = await api.getImagePreviews(limit, offset);
 
-    saveTags(name, tags) {
-        const that = this;
-        return new Promise(function (resolve, reject) {
-            if (!!name) {
-                const tagsArray = _((tags || '').split(',')).map(t => t.trim()).filter(t => !!t).value();
-                that._mongoApi.saveTags(name, tagsArray)
-                    .then(function () {
-                        resolve();
-                    })
-                    .catch(function (err) {
-                        reject(err);
-                    });
+        const fileNames = _.map(imageData.items, i => i.name);
+
+        const tags = await this._mongoApi.getTagsOfFiles(fileNames);
+
+        _.forEach(imageData.items, i => {
+            const tagsItem = _.find(tags, t => t.name === i.name);
+            if (tagsItem) {
+                i.tags = tagsItem.tags;
             } else {
-                resolve();
+                i.tags = '';
             }
         });
+
+        return imageData;
+    }
+
+    async getImagePreviewsWithGivenTags(tagsArray, limit = 10, offset = 0) {
+        const tagsData = await this._mongoApi.getFilesWithTags(tagsArray, _.toNumber(limit), _.toNumber(offset));
+
+        const api = new YandexDiskApi(this._oAuthToken);
+        const imageData = await Promise.all(_(tagsData.items).map(i => api.getImagePreview(i.name)).value());
+
+        tagsData.items = _(tagsData.items).map(mi => {
+            const preview = _.find(imageData, p => p.name === mi.name);
+            preview.tags = mi.tags;
+            return preview;
+        })
+            .filter(i => !!i)
+            .value();
+        return tagsData;
+    }
+
+    async saveTags(name, tags) {
+        if (!!name) {
+            const tagsArray = _((tags || '').split(',')).map(t => t.trim()).filter(t => !!t).value();
+            await this._mongoApi.saveTags(name, tagsArray);
+        }
     }
 }
