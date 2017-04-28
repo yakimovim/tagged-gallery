@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -10,7 +11,10 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static('./src/client'));
+const clientPath = path.resolve(process.cwd(), './dist/client');
+console.log(clientPath);
+
+app.use(express.static(clientPath));
 
 app.get('/api/clientId', function(req, res){
     res.send(config.yandexClientId);
