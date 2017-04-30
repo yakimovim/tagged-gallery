@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 export function getThumbnailsData(search, limit, offset) {
     return $.get(`/api/preview?search=${encodeURI(search || '')}&limit=${limit}&offset=${offset}`)
         .fail(function () {

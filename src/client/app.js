@@ -1,4 +1,9 @@
-import $ from 'jquery';
+global.$ = require('jquery');
+
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap-theme.min.css'
+
 import { getCookie } from './cookie.js';
 import { getThumbnailsData } from './data.js';
 import { init, drawPreviews } from './dom.js';

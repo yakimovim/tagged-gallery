@@ -7,22 +7,31 @@
         .imageDiv {
             float: left;
         }
+        .imgPreview {
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Hello</h1>
-    <div>
-        <input type="text" id="searchTextbox" />
-        <button id="searchButton">Search</button>
-        <button id="untaggedButton">Find untagged</button>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <p class="navbar-text">Tagged Gallery</p>
+            </div>
+        </nav>
+        <div class="row">
+            <input type="text" id="searchTextbox" />
+            <button id="searchButton">Search</button>
+            <button id="untaggedButton">Find untagged</button>
+        </div>
+        <div id="thumbnails" class="row"></div>
+        <div class="row">
+            <button id="prevButton">Prev</button>
+            <button id="nextButton">Next</button>
+        </div>
+        <div id="bigImage" class="row"></div>
     </div>
-    <div id="thumbnails"></div>
-    <div style="clear: both">
-        <button id="prevButton">Prev</button>
-        <button id="nextButton">Next</button>
-    </div>
-    <div id="bigImage"></div>
 </body>
 
 </html>
