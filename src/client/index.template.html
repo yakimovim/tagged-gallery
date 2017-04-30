@@ -7,9 +7,6 @@
         .imageDiv {
             float: left;
         }
-        .imgPreview {
-            width: 100%;
-        }
     </style>
 </head>
 
@@ -17,18 +14,30 @@
     <div class="container">
         <nav class="navbar navbar-default">
             <div class="navbar-header">
-                <p class="navbar-text">Tagged Gallery</p>
+                <h1 class="navbar-text">Tagged Gallery</h1>
             </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a id="untaggedButton" href="#">
+                        <h4>Find untagged</h4>
+                    </a>
+                </li>
+            </ul>
         </nav>
-        <div class="row">
-            <input type="text" id="searchTextbox" />
-            <button id="searchButton">Search</button>
-            <button id="untaggedButton">Find untagged</button>
+        <div class="row input-group">
+            <input type="text" id="searchTextbox" class="form-control" />
+            <span class="input-group-btn">
+                <button id="searchButton" class="btn btn-default">Search</button>
+            </span>
         </div>
         <div id="thumbnails" class="row"></div>
         <div class="row">
-            <button id="prevButton">Prev</button>
-            <button id="nextButton">Next</button>
+            <nav aria-label="Page navigation">
+                <ul class="pager">
+                    <li class="previous"><a id="prevButton" href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    <li class="next"><a id="nextButton" href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
         </div>
         <div id="bigImage" class="row"></div>
     </div>

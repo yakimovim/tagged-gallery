@@ -11,7 +11,7 @@ function generateThumbnails(data) {
     $('#thumbnails').empty();
     $.each(data.items, function (index, value) {
         if (value.type === 'file') {
-            $('#thumbnails').prepend('<div class="imageDiv col-md-4 row" data-name="' + value.name + '"><div class="col-md-10 col-md-offset-1"><img class="imgPreview img-thumbnail img-responsive" src="' + value.preview + '"></img></div><div class="col-md-10 col-md-offset-1 input-group"><input class="tagsInput form-control" type="text" value="' + value.tags + '"/><span class="input-group-btn"><button class="saveTagsBtn btn btn-default">Edit</button></span></div></div>');
+            $('#thumbnails').prepend('<div class="imageDiv col-md-4 row" data-name="' + value.name + '"><div class="imgWrapper col-md-10 col-md-offset-1"><img class="imgPreview img-thumbnail img-responsive" src="' + value.preview + '"></img></div><div class="col-md-10 col-md-offset-1 input-group"><input class="tagsInput form-control" type="text" value="' + value.tags + '"/><span class="input-group-btn"><button class="saveTagsBtn btn btn-default">Edit</button></span></div></div>');
         }
     });
 }
