@@ -13,7 +13,7 @@ export default class TaggedGalleryApi {
         this._mongoApi = new MongoDbApi();
     }
 
-    getImagePreviews(search = '', limit = 10, offset = 0) {
+    getImagePreviews(search = '', limit = 12, offset = 0) {
         if (!!search) {
             const tagsArray = _((search || '').split(',')).map(t => t.trim()).filter(t => !!t).value();
             if (tagsArray.length === 0) {
@@ -26,7 +26,7 @@ export default class TaggedGalleryApi {
         }
     }
 
-    async getImagePreviewsWithImageWithNoTags(limit = 10, offset = 0) {
+    async getImagePreviewsWithImageWithNoTags(limit = 12, offset = 0) {
         limit = _.toInteger(limit);
         offset = _.toInteger(offset);
 
@@ -41,7 +41,7 @@ export default class TaggedGalleryApi {
         }
     }
 
-    async getImagePreviewsWithAnyTags(limit = 10, offset = 0) {
+    async getImagePreviewsWithAnyTags(limit = 12, offset = 0) {
         const api = new YandexDiskApi(this._oAuthToken);
 
         const imageData = await api.getImagePreviews(limit, offset);
@@ -62,7 +62,7 @@ export default class TaggedGalleryApi {
         return imageData;
     }
 
-    async getImagePreviewsWithGivenTags(tagsArray, limit = 10, offset = 0) {
+    async getImagePreviewsWithGivenTags(tagsArray, limit = 12, offset = 0) {
         const tagsData = await this._mongoApi.getFilesWithTags(tagsArray, _.toNumber(limit), _.toNumber(offset));
 
         const api = new YandexDiskApi(this._oAuthToken);

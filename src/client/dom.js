@@ -1,7 +1,7 @@
 import { getThumbnailsData, getThumbnailsDataWithUntagged } from './data.js';
 
 let offset = 0;
-let limit = 10;
+let limit = 12;
 let total;
 
 function generateThumbnails(data) {
@@ -11,7 +11,7 @@ function generateThumbnails(data) {
     $('#thumbnails').empty();
     $.each(data.items, function (index, value) {
         if (value.type === 'file') {
-            $('#thumbnails').prepend('<div class="imageDiv col-md-4 row" data-name="' + value.name + '"><div class="imgWrapper col-md-10 col-md-offset-1"><img class="imgPreview img-thumbnail img-responsive" src="' + value.preview + '"></img></div><div class="col-md-10 col-md-offset-1 input-group"><input class="tagsInput form-control" type="text" value="' + value.tags + '"/><span class="input-group-btn"><button class="saveTagsBtn btn btn-default">Edit</button></span></div></div>');
+            $('#thumbnails').append('<div class="imageDiv col-md-4 row" data-name="' + value.name + '"><div class="imgWrapper col-md-10 col-md-offset-1"><img class="img-thumbnail img-responsive imgPreview" src="' + value.preview + '"></img></div><div class="col-md-10 col-md-offset-1 input-group"><input class="tagsInput form-control" type="text" value="' + value.tags + '"/><span class="input-group-btn"><button class="saveTagsBtn btn btn-default">Edit</button></span></div></div>');
         }
     });
 }
@@ -45,7 +45,7 @@ export function drawPreviews(data) {
 }
 
 export function init() {
-    $('#prevButton').click(function () {
+    $('.prevButton').click(function () {
         offset -= limit;
         if (offset < 0) {
             offset = 0;
@@ -56,7 +56,7 @@ export function init() {
             });
     });
 
-    $('#nextButton').click(function () {
+    $('.nextButton').click(function () {
         offset += limit;
         if (offset > total) {
             offset -= limit;

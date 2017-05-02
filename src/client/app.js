@@ -16,7 +16,7 @@ if (!token) {
 } else {
     init();
 
-    getThumbnailsData('', 10, 0)
+    getThumbnailsData('', 12, 0)
         .then(function(data){
             drawPreviews(data);
         });
