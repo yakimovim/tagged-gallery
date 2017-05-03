@@ -11,7 +11,7 @@ function generateThumbnails(data) {
     $('#thumbnails').empty();
     $.each(data.items, function (index, value) {
         if (value.type === 'file') {
-            $('#thumbnails').append('<div class="imageDiv col-md-4 row" data-name="' + value.name + '"><div class="imgWrapper col-md-10 col-md-offset-1"><img class="img-thumbnail img-responsive imgPreview" src="' + value.preview + '"></img></div><div class="col-md-10 col-md-offset-1 input-group"><input class="tagsInput form-control" type="text" value="' + value.tags + '"/><span class="input-group-btn"><button class="saveTagsBtn btn btn-default">Edit</button></span></div></div>');
+            $('#thumbnails').append('<div class="imageDiv col-md-4 row" data-name="' + value.name + '"><div class="imgWrapper col-md-10 col-md-offset-1"><img class="img-thumbnail img-responsive imgPreview img-center" src="' + value.preview + '"></img></div><div class="col-md-10 col-md-offset-1 input-group"><input class="tagsInput form-control" type="text" value="' + value.tags + '"/><span class="input-group-btn"><button class="saveTagsBtn btn btn-default">Edit</button></span></div></div>');
         }
     });
 }
@@ -23,7 +23,7 @@ function attachClickHandlers() {
 
         $.get('/api/image?fileName=' + encodeURI(name))
             .done(function (data) {
-                $('#bigImage').append('<img class="img-responsive" src="' + data.href + '"></img>');
+                $('#bigImage').append('<img class="img-responsive img-center" src="' + data.href + '"></img>');
                 $('#fullImageDialog').modal('show');
             })
             .fail(function () {

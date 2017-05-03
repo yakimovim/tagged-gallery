@@ -1,0 +1,22 @@
+.imageDiv {
+    margin-bottom: 20px;
+}
+
+.imgWrapper {
+    height: 200px;
+}
+
+.img-center {
+    display: block !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal-lg {
+    width: 90% !important
+}
+
+#bigImage {
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+}
