@@ -24,6 +24,7 @@ function attachClickHandlers() {
         $.get('/api/image?fileName=' + encodeURI(name))
             .done(function (data) {
                 $('#bigImage').append('<img class="img-responsive" src="' + data.href + '"></img>');
+                $('#fullImageDialog').modal('show');
             })
             .fail(function () {
                 console.error("Can't get full image");
