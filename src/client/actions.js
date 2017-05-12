@@ -1,0 +1,37 @@
+import store from './store.js';
+import ActionTypes from './actionTypes.js';
+import * as Data from './data.js'
+
+export function getThumbnails(searchText,offset,pageSize) {
+    store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS });
+    Data.getThumbnails(searchText, offset, pageSize)
+        .then(function(data){
+            store.dispatch({ 
+                type: ActionTypes.GET_THUMBNAILS_PAGE.SUCCESS,
+                offset: data.offset,
+                total: data.total,
+                thumbnails: data.items
+            });
+        })
+        .catch(function() {
+            store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.FAILURE });
+        });
+}
+
+export function getNextPage() {
+    const state = store.getState();
+    if(state.offset + state.pageSize <= state.total) {
+        getThumbnails(state.searchText, state.offset + state.pageSize, state.pageSize);
+    }
+}
+
+export function getPrevPage() {
+    const state = store.getState();
+    if(state.offset > 0) {
+        let offset = state.offset - state.pageSize;
+        if(offset < 0) {
+            offset = 0;
+        }
+        getThumbnails(state.searchText, offset, state.pageSize);
+    }
+}

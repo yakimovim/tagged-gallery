@@ -12,7 +12,7 @@
     "build:server": "webpack --config webpack.server.config.js",
     "build:client": "webpack --config webpack.client.config.js",
     "build": "npm run build:server && npm run build:client",
-    "start": "nodemon --watch src --exec npm run build:and:start",
+    "start": "nodemon --ext js,jsx,css,html --watch src --exec npm run build:and:start",
     "start:prod": "node ./dist/server/index.js",
     "start:dev": "node --debug ./dist/server/index.js",
     "build:and:start": "npm run build && npm run start:dev",
@@ -29,6 +29,7 @@
     "babel-loader": "^7.0.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",
     "cookie-parser": "^1.4.3",
@@ -42,8 +43,15 @@
     "lodash": "^4.17.4",
     "mongodb": "^2.2.25",
     "node-fetch": "^1.6.3",
+    "prop-types": "^15.5.9",
+    "react": "^15.5.4",
+    "react-bootstrap": "^0.31.0",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
+    "redux": "^3.6.0",
     "style-loader": "^0.16.1",
     "url-loader": "^0.5.8",
-    "webpack": "^2.4.1"
+    "webpack": "^2.4.1",
+    "whatwg-fetch": "^2.0.3"
   }
 }

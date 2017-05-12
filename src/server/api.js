@@ -55,7 +55,7 @@ export default class TaggedGalleryApi {
             if (tagsItem) {
                 i.tags = tagsItem.tags;
             } else {
-                i.tags = '';
+                i.tags = [];
             }
         });
 

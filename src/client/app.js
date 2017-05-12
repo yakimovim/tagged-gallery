@@ -1,25 +1,27 @@
-global.$ = require('jquery');
+import './css.js'
 
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/css/bootstrap-theme.min.css'
-import './app.css'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 
-import { getCookie } from './cookie.js';
-import { getThumbnailsData } from './data.js';
-import { init, drawPreviews } from './dom.js';
+import { getCookie } from './cookie.js'
+import { getClientId } from './data.js'
+
+import store from './store.js'
+import { getThumbnails } from './actions.js'
+import Application from './components/application.jsx'
 
 var token = getCookie("access_token");
 if (!token) {
-    $.get('/api/clientId').then(function (clientId) {
+    getClientId().then(function (clientId) {
         location.href = "https://oauth.yandex.ru/authorize?response_type=token&client_id=" + clientId;
     });
 } else {
-    init();
+    ReactDOM.render(<Provider store={store}>
+        <Application />
+    </Provider>,
+        document.getElementById('app'));
 
-    getThumbnailsData('', 12, 0)
-        .then(function(data){
-            drawPreviews(data);
-        });
+    getThumbnails('', 0, 12);
 }
 
