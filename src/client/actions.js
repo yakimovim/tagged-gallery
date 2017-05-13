@@ -18,6 +18,20 @@ export function getThumbnails(searchText,offset,pageSize) {
         });
 }
 
+export function getFullImage(name) {
+    store.dispatch({ type: ActionTypes.GET_FULL_IMAGE.GETTINGS });
+    Data.getFullImage(name)
+        .then(function(data){
+            store.dispatch({ 
+                type: ActionTypes.GET_FULL_IMAGE.SUCCESS,
+                href: data.href
+            });
+        })
+        .catch(function() {
+            store.dispatch({ type: ActionTypes.GET_FULL_IMAGE.FAILURE });
+        });
+}
+
 export function getNextPage() {
     const state = store.getState();
     if(state.offset + state.pageSize <= state.total) {

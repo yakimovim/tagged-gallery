@@ -35,6 +35,11 @@ export function getThumbnailsDataWithUntagged(limit, offset) {
     });
 }
 
+export function getFullImage(name) {
+    return fetch(`/api/image?fileName=${encodeURI(name)}`, { credentials: 'same-origin' }).then(function (response) {
+        return response.json()
+    });}
+
 export function getClientId() {
     return fetch('/api/clientId', { credentials: 'same-origin' }).then(function (response) {
         return response.text()

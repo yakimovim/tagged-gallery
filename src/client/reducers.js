@@ -18,6 +18,20 @@ const reducer = (state, action) => {
             });
             return newState;
         }
+        case ActionTypes.GET_FULL_IMAGE.SUCCESS:
+        {
+            const newState = Object.assign({}, state, {
+                fullImage: action.href
+            });
+            return newState;
+        }
+        case ActionTypes.REMOVE_FULL_IMAGE:
+        {
+            const newState = Object.assign({}, state, {
+                fullImage: ''
+            });
+            return newState;
+        }
         default:
             return state;
     }

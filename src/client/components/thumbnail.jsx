@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Image, Button } from 'react-bootstrap'
 import { saveTags } from '../data.js'
+import { getFullImage } from '../actions.js'
 
 class Thumbnail extends React.Component {
 
@@ -14,6 +15,10 @@ class Thumbnail extends React.Component {
         saveTags(this.props.name, this.state.tags);
     }
 
+    handleShowFullImage() {
+        getFullImage(this.props.name);
+    }
+
     handleTagsChange(evnt) {
         this.setState({ tags: evnt.target.value });
     }
@@ -21,7 +26,7 @@ class Thumbnail extends React.Component {
     render() {
         return <div className="imageDiv col-md-4 row" >
             <div className="imgWrapper col-md-10 col-md-offset-1">
-                <Image className="img-center" src={this.props.preview} thumbnail />
+                <Image className="img-center" src={this.props.preview} thumbnail onClick={this.handleShowFullImage.bind(this)} />
             </div>
             <div className="col-md-10 col-md-offset-1 input-group">
                 <input className="tagsInput form-control" type="text" value={this.state.tags} onChange={this.handleTagsChange.bind(this)} />
