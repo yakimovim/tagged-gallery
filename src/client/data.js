@@ -12,7 +12,10 @@ export function getThumbnails(search = '', offset = 0, limit = 12) {
 
 function getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset) {
     fetch(`/api/untagged?limit=${limit}&offset=${offset}`, { credentials: 'same-origin' })
-        .done(function (data) {
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function (data) {
             if (!!data.readNext) {
                 setTimeout(function () {
                     offset += limit;
@@ -23,7 +26,7 @@ function getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset) {
                 resolve(data);
             }
         })
-        .fail(function () {
+        .catch(function () {
             console.error("Can't get preview of untagged images");
             reject();
         });
