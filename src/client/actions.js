@@ -49,3 +49,9 @@ export function getPrevPage() {
         getThumbnails(state.searchText, offset, state.pageSize);
     }
 }
+
+export function search(searchText) {
+    store.dispatch({ type: ActionTypes.SET_SEARCH_TEXT, searchText: searchText });
+    const state = store.getState();
+    getThumbnails(searchText, 0, state.pageSize);
+}
