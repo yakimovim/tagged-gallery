@@ -1,17 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Row } from 'react-bootstrap'
+import { Row, Modal, ProgressBar } from 'react-bootstrap'
 import Thumbnail from './thumbnail.jsx'
 
 class ThumbnailsView extends React.Component {
     render() {
-        return <Row>
+        return <Row className="modal-container">
+            <Modal
+                bsSize="large"
+                show={this.props.loading}
+                container={this}
+            >
+                <Modal.Body>
+                    <ProgressBar active now={100} />
+                </Modal.Body>
+            </Modal>
             {this.props.thumbnails.map(thumbnail => {
-                return (<Thumbnail 
-                    key={thumbnail.name} 
-                    name={thumbnail.name} 
-                    preview={thumbnail.preview} 
+                return (<Thumbnail
+                    key={thumbnail.name}
+                    name={thumbnail.name}
+                    preview={thumbnail.preview}
                     tags={thumbnail.tags} />)
             })}
         </Row>
@@ -27,9 +36,10 @@ ThumbnailsView.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    thumbnails: state.thumbnails
-  }
+    return {
+        thumbnails: state.thumbnails,
+        loading: state.loading
+    }
 }
 
 export default connect(mapStateToProps)(ThumbnailsView);

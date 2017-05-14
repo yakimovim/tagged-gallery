@@ -20,3 +20,11 @@
     margin-left: 0.2em;
     margin-right: 0.2em;
 }
+
+.modal-container {
+  position: relative;
+}
+
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}

@@ -7,7 +7,8 @@ const initialState = {
     offset: 0,
     total: 0,
     thumbnails: [],
-    fullImage: ''
+    fullImage: '',
+    loading: false
 }
 
 const store = createStore(reducer, initialState);

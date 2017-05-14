@@ -2,12 +2,27 @@ import ActionTypes from './actionTypes.js'
 
 const reducer = (state, action) => {
     switch(action.type) {
+        case ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS:
+        {
+            const newState = Object.assign({}, state, {
+                loading: true
+            });
+            return newState;
+        }
+        case ActionTypes.GET_THUMBNAILS_PAGE.FAILURE:
+        {
+            const newState = Object.assign({}, state, {
+                loading: false
+            });
+            return newState;
+        }
         case ActionTypes.GET_THUMBNAILS_PAGE.SUCCESS:
         {
             const newState = Object.assign({}, state, {
                 offset: action.offset,
                 total: action.total,
-                thumbnails: action.thumbnails
+                thumbnails: action.thumbnails,
+                loading: false
             });
             return newState;
         }
