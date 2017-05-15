@@ -16,15 +16,18 @@
     width: 90% !important
 }
 
-#bigImage {
-    margin-left: 0.2em;
-    margin-right: 0.2em;
-}
-
 .modal-container {
   position: relative;
 }
 
 .modal-container .modal, .modal-container .modal-backdrop {
   position: absolute;
+}
+
+#loadingImg {
+    width: 200px;
+    height: 200px;
+    background-image: url('./loading.gif');
+    margin-left: auto;
+    margin-right: auto;
 }

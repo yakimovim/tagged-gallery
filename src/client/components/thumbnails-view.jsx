@@ -1,19 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Row, Modal, ProgressBar } from 'react-bootstrap'
+import { Row, Modal } from 'react-bootstrap'
 import Thumbnail from './thumbnail.jsx'
 
 class ThumbnailsView extends React.Component {
     render() {
         return <Row className="modal-container">
             <Modal
-                bsSize="large"
+                bsSize="small"
                 show={this.props.loading}
                 container={this}
             >
                 <Modal.Body>
-                    <ProgressBar active now={100} />
+                    <div id="loadingImg" />
                 </Modal.Body>
             </Modal>
             {this.props.thumbnails.map(thumbnail => {
