@@ -35,7 +35,6 @@ class Thumbnail extends React.Component {
                 <Image className="img-center" src={this.props.preview} thumbnail onClick={this.handleShowFullImage.bind(this)} />
             </div>
             <div className="col-md-10 col-md-offset-1 input-group">
-                {/*<input className="tagsInput form-control" type="text" value={this.state.tags} onChange={this.handleTagsChange.bind(this)} />*/}
                 <TagsInput value={this.state.tags} onChange={this.handleTagsChange.bind(this)} />
                 <span className="input-group-btn">
                     <Button className="saveTagsBtn" default onClick={this.handleSave.bind(this)}>Edit</Button>
