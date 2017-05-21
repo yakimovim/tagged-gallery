@@ -19,7 +19,7 @@ const reducer = (state, action) => {
         case ActionTypes.GET_THUMBNAILS_PAGE.SUCCESS:
         {
             const newState = Object.assign({}, state, {
-                offset: action.offset,
+                pageIndex: action.pageIndex,
                 total: action.total,
                 thumbnails: action.thumbnails,
                 loading: false

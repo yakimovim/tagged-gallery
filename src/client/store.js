@@ -4,7 +4,7 @@ import reducer from './reducers.js'
 const initialState = {
     searchText: '',
     pageSize: 12,
-    offset: 0,
+    pageIndex: 0,
     total: 0,
     thumbnails: [],
     fullImage: '',

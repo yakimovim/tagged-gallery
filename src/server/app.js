@@ -52,6 +52,10 @@ app.post('/api/saveTags', function (req, res) {
        });
 });
 
+app.get(['/:searchText/:pageIndex', '/:pageIndex'], function(req, res) {
+  res.sendFile(clientPath + '/index.html');
+});
+
 const port = process.env.PORT || 8080;
 app.listen(port, function () {
     console.log(`Listening on port ${port}...`);
