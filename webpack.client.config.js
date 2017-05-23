@@ -9,7 +9,8 @@ module.exports = {
     entry: ['./src/client/app.js'],
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'dist/client/')
+        path: path.resolve(__dirname, 'dist/client/'),
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -38,7 +39,7 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery"
         }),
-        new HtmlWebpackPlugin({  // Also generate a test.html 
+        new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/client/index.template.html'
         }),

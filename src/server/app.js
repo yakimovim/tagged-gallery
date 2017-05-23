@@ -16,7 +16,7 @@ console.log(clientPath);
 
 app.use(express.static(clientPath));
 
-app.get('/api/clientId', function(req, res){
+app.get('/api/clientId', function (req, res) {
     res.send(config.yandexClientId);
 });
 
@@ -47,13 +47,13 @@ app.get('/api/image', function (req, res) {
 app.post('/api/saveTags', function (req, res) {
     const api = new TaggedGalleryApi(req.cookies.access_token);
     api.saveTags(req.body.name, req.body.tags)
-       .then(function() {
-           res.send();
-       });
+        .then(function () {
+            res.send();
+        });
 });
 
-app.get(['/:searchText/:pageIndex', '/:pageIndex'], function(req, res) {
-  res.sendFile(clientPath + '/index.html');
+app.get('*', function (req, res) {
+    res.sendFile(clientPath + '/index.html');
 });
 
 const port = process.env.PORT || 8080;
