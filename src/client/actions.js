@@ -25,6 +25,7 @@ export function getThumbnailsPage(searchText, pageIndex, pageSize) {
     if(searchText != state.searchText
     || pageIndex != state.pageIndex
     || pageSize != state.pageSize) {
+        store.dispatch({ type: ActionTypes.SET_SEARCH_TEXT, searchText: decodeURI(searchText) });
         getThumbnails(searchText, (pageIndex - 1) * pageSize, pageSize);
     }
 }
