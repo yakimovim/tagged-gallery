@@ -16,15 +16,12 @@ class Thumbnail extends React.Component {
         };
     }
 
-    handleSave() {
-        saveTags(this.props.name, this.state.tags.join(','));
-    }
-
     handleShowFullImage() {
         getFullImage(this.props.name);
     }
 
     handleTagsChange(tags) {
+        saveTags(this.props.name, tags.join(','));
         this.setState({ tags: tags });
     }
 
@@ -36,9 +33,6 @@ class Thumbnail extends React.Component {
             </div>
             <div className="col-md-10 col-md-offset-1 input-group">
                 <TagsInput value={this.state.tags} onChange={this.handleTagsChange.bind(this)} />
-                <span className="input-group-btn">
-                    <Button className="saveTagsBtn" default onClick={this.handleSave.bind(this)}>Edit</Button>
-                </span>
             </div>
         </div>
     }
