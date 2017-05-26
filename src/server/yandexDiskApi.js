@@ -23,7 +23,7 @@ export default class YandexDiskApi {
 
     async getImagePreviews(limit = 12, offset = 0) {
         try {
-            const data = await this._get(`${config.yandexDiskApiUrl}?path=${encodeURI(config.yandexDiskFolder)}&limit=${limit}&offset=${offset}`);
+            const data = await this._get(`${config.yandexDiskApiUrl}?path=${encodeURI(config.yandexDiskFolder)}&limit=${limit}&offset=${offset}&preview_size=x190`);
 
             const jsonData = await data.json();
 
