@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Row, Modal } from 'react-bootstrap'
 import Thumbnail from './thumbnail.jsx'
 
-class ThumbnailsView extends React.Component {
+export class ThumbnailsView extends React.Component {
     render() {
         return <Row className="modal-container">
             <Modal

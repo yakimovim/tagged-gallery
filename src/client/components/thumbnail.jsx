@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Image, Button } from 'react-bootstrap'
 import TagsInput from 'react-tagsinput'
 import _ from 'lodash'
 import { saveTags } from '../data.js'
 import { getFullImage } from '../actions.js'
 
-class Thumbnail extends React.Component {
+export class Thumbnail extends React.Component {
 
     constructor(props) {
         super(props);
@@ -17,11 +18,11 @@ class Thumbnail extends React.Component {
     }
 
     handleShowFullImage() {
-        getFullImage(this.props.name);
+        this.props.onGetFullImage(this.props.name);
     }
 
     handleTagsChange(tags) {
-        saveTags(this.props.name, tags.join(','));
+        this.props.onSaveTags(this.props.name, tags);
         this.setState({ tags: tags });
     }
 
@@ -41,7 +42,24 @@ class Thumbnail extends React.Component {
 Thumbnail.propTypes = {
     name: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.string).isRequired
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onGetFullImage: PropTypes.func.isRequired,
+    onSaveTags: PropTypes.func.isRequired
 }
 
-export default Thumbnail;
+const mapStateToProps = (state) => {
+    return {}
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onGetFullImage: function (name) {
+            getFullImage(name);
+        },
+        onSaveTags: function(name, tags) {
+            saveTags(name, tags.join(','));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Thumbnail)

@@ -1,10 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { findFirstPageWithUntaggedImage } from '../actions.js'
 
-export default class Header extends React.Component {
+export class Header extends React.Component {
     handleFindUntagged() {
-        findFirstPageWithUntaggedImage();
+        this.props.onFindFirstPageWithUntaggedImage();
     }
 
     render() {
@@ -18,3 +20,21 @@ export default class Header extends React.Component {
         </Navbar>
     }
 }
+
+Header.propTypes = {
+    onFindFirstPageWithUntaggedImage: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => {
+    return {}
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onFindFirstPageWithUntaggedImage: function () {
+            findFirstPageWithUntaggedImage();
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

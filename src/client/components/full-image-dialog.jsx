@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Image, Modal } from 'react-bootstrap'
 import ActionTypes from '../actionTypes.js'
 
-class FullImageDialog extends React.Component {
+export class FullImageDialog extends React.Component {
     handleCloseDialog() {
         this.props.onCloseDialog();
     }
@@ -26,7 +26,8 @@ class FullImageDialog extends React.Component {
 }
 
 FullImageDialog.propTypes = {
-    href: PropTypes.string.isRequired
+    href: PropTypes.string.isRequired,
+    onCloseDialog: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {

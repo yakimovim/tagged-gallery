@@ -2,7 +2,7 @@ import React from 'react'
 import { getNextPage, getPrevPage } from '../actions.js'
 import { Pager, Row } from 'react-bootstrap'
 
-export default class Ppaginator extends React.Component {
+export default class Paginator extends React.Component {
     render() {
         return <Row>
             <Pager>

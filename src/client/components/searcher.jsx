@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { FormGroup, InputGroup, FormControl, Button, Row } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { search } from '../actions.js'
 
-class Searcher extends React.Component {
+export class Searcher extends React.Component {
 
     constructor(props) {
         super(props);
@@ -15,7 +16,7 @@ class Searcher extends React.Component {
     }
 
     handleSeachClick() {
-        search(this.state.searchText);
+        this.props.onSearch(this.state.searchText);
     }
 
     render() {
@@ -32,10 +33,23 @@ class Searcher extends React.Component {
     }
 }
 
+Searcher.propTypes = {
+    searchText: PropTypes.string.isRequired,
+    onSearch: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => {
   return {
     searchText: state.searchText
   }
 }
 
-export default connect(mapStateToProps)(Searcher);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSearch: function (searchText) {
+            search(searchText);
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Searcher);
