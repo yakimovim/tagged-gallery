@@ -19,11 +19,20 @@ export class Searcher extends React.Component {
         this.props.onSearch(this.state.searchText);
     }
 
+    handleKeyPress(evnt) {
+        if (evnt.key === 'Enter') {
+            evnt.preventDefault();
+            this.props.onSearch(this.state.searchText);
+        }
+    }
+
     render() {
         return <Row>
             <FormGroup>
                 <InputGroup>
-                    <FormControl type="text" value={this.state.searchText} onChange={this.handleSearchTextChange.bind(this)} />
+                    <FormControl type="text" value={this.state.searchText} 
+                        onChange={this.handleSearchTextChange.bind(this)}
+                        onKeyPress={this.handleKeyPress.bind(this)} />
                     <InputGroup.Button>
                         <Button onClick={this.handleSeachClick.bind(this)}>Search</Button>
                     </InputGroup.Button>
@@ -39,9 +48,9 @@ Searcher.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    searchText: state.searchText
-  }
+    return {
+        searchText: state.searchText
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
