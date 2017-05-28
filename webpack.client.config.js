@@ -19,7 +19,9 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader'
             },
-            { test: /\.css$/, loader: "style-loader!css-loader" },
+            { 
+                test: /\.css$/, 
+                loader: "style-loader!css-loader" },
             {
                 test: /\.woff$/,
                 loader: "url-loader?limit=10000&mimetype=application/font-woff&name=[path][name].[ext]"
