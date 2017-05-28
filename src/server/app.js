@@ -12,7 +12,6 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 const clientPath = path.resolve(process.cwd(), './dist/client');
-console.log(clientPath);
 
 app.use(express.static(clientPath));
 
