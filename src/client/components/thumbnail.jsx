@@ -11,7 +11,6 @@ export class Thumbnail extends React.Component {
 
     constructor(props) {
         super(props);
-        let id = 1;
         this.state = {
             tags: this.props.tags
         };
