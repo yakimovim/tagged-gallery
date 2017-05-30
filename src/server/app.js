@@ -1,5 +1,6 @@
 import path from 'path';
 import express from 'express';
+import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import YandexDiskApi from './yandexDiskApi';
@@ -12,6 +13,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 const clientPath = path.resolve(process.cwd(), './dist/client');
+
+app.use(compression());
 
 app.use(express.static(clientPath));
 
