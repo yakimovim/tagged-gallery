@@ -13,24 +13,24 @@ export default class TaggedGalleryApi {
         this._mongoApi = new MongoDbApi();
     }
 
-    getImagePreviews(search = '', limit = 12, offset = 0) {
+    getImagePreviews(search = '', limit = 12, offset = 0, sortBy = 'name') {
         if (!!search) {
             const tagsArray = _((search || '').split(',')).map(t => t.trim()).filter(t => !!t).value();
             if (tagsArray.length === 0) {
-                return this.getImagePreviewsWithAnyTags(limit, offset)
+                return this.getImagePreviewsWithAnyTags(limit, offset, sortBy)
             } else {
-                return this.getImagePreviewsWithGivenTags(tagsArray, limit, offset)
+                return this.getImagePreviewsWithGivenTags(tagsArray, limit, offset, sortBy)
             }
         } else {
-            return this.getImagePreviewsWithAnyTags(limit, offset)
+            return this.getImagePreviewsWithAnyTags(limit, offset, sortBy)
         }
     }
 
-    async getImagePreviewsWithImageWithNoTags(limit = 12, offset = 0) {
+    async getImagePreviewsWithImageWithNoTags(limit = 12, offset = 0, sortBy = 'name') {
         limit = _.toInteger(limit);
         offset = _.toInteger(offset);
 
-        const imagesWithTags = await this.getImagePreviewsWithAnyTags(limit, offset);
+        const imagesWithTags = await this.getImagePreviewsWithAnyTags(limit, offset, sortBy);
 
         if (_.some(imagesWithTags.items, i => i.tags.length === 0)) {
             return imagesWithTags;
@@ -41,10 +41,10 @@ export default class TaggedGalleryApi {
         }
     }
 
-    async getImagePreviewsWithAnyTags(limit = 12, offset = 0) {
+    async getImagePreviewsWithAnyTags(limit = 12, offset = 0, sortBy = 'name') {
         const api = new YandexDiskApi(this._oAuthToken);
 
-        const imageData = await api.getImagePreviews(limit, offset);
+        const imageData = await api.getImagePreviews(limit, offset, sortBy);
 
         const fileNames = _.map(imageData.items, i => i.name);
 
@@ -62,8 +62,8 @@ export default class TaggedGalleryApi {
         return imageData;
     }
 
-    async getImagePreviewsWithGivenTags(tagsArray, limit = 12, offset = 0) {
-        const tagsData = await this._mongoApi.getFilesWithTags(tagsArray, _.toNumber(limit), _.toNumber(offset));
+    async getImagePreviewsWithGivenTags(tagsArray, limit = 12, offset = 0, sortBy = 'name') {
+        const tagsData = await this._mongoApi.getFilesWithTags(tagsArray, _.toNumber(limit), _.toNumber(offset), sortBy);
 
         const api = new YandexDiskApi(this._oAuthToken);
         const imageData = await Promise.all(_(tagsData.items).map(i => api.getImagePreview(i.name)).value());

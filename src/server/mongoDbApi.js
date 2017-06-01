@@ -38,7 +38,7 @@ export default class MongoDbApi {
             });
     }
 
-    getFilesWithTags(tagsArray, limit, offset) {
+    getFilesWithTags(tagsArray, limit, offset, sortBy = 'name') {
         return this._connect()
             .then(function (db) {
                 return new Promise(function (resolve, reject) {
@@ -46,7 +46,9 @@ export default class MongoDbApi {
 
                     const tagsRegexes = _(tagsArray).map(t => new RegExp('^' + t, 'i')).value();
 
-                    imageTags.find({ "tags": { "$all": tagsRegexes } }).skip(offset).limit(limit).toArray(function (err, data) {
+                    const sortByName = sortBy !== "name" ? -1 : 1;
+
+                    imageTags.find({ "tags": { "$all": tagsRegexes } }).sort({ "name": sortByName }).skip(offset).limit(limit).toArray(function (err, data) {
                         if (err) {
                             reject(err);
                         }

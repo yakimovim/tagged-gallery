@@ -24,7 +24,7 @@ app.get('/api/clientId', function (req, res) {
 
 app.get('/api/preview', function (req, res) {
     const api = new TaggedGalleryApi(req.cookies.access_token);
-    api.getImagePreviews(req.query.search, req.query.limit, req.query.offset)
+    api.getImagePreviews(req.query.search, req.query.limit, req.query.offset, decodeURI(req.query.sortBy))
         .then(function (data) {
             res.json(data);
         });
@@ -32,7 +32,7 @@ app.get('/api/preview', function (req, res) {
 
 app.get('/api/untagged', function (req, res) {
     const api = new TaggedGalleryApi(req.cookies.access_token);
-    api.getImagePreviewsWithImageWithNoTags(req.query.limit, req.query.offset)
+    api.getImagePreviewsWithImageWithNoTags(req.query.limit, req.query.offset, decodeURI(req.query.sortBy))
         .then(function (data) {
             res.json(data);
         });

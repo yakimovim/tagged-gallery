@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 
-export function getThumbnails(search = '', offset = 0, limit = 12) {
-    return fetch(`/api/preview?search=${encodeURI(search || '')}&limit=${limit}&offset=${offset}`, { credentials: 'same-origin' })
+export function getThumbnails(search = '', offset = 0, limit = 12, sortBy = 'name') {
+    return fetch(`/api/preview?search=${encodeURI(search || '')}&limit=${limit}&offset=${offset}&sortBy=${encodeURI(sortBy)}`, { credentials: 'same-origin' })
         .then(function (response) {
             return response.json();
         })
@@ -10,8 +10,8 @@ export function getThumbnails(search = '', offset = 0, limit = 12) {
         });
 }
 
-function getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset) {
-    fetch(`/api/untagged?limit=${limit}&offset=${offset}`, { credentials: 'same-origin' })
+function getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset, sortBy = 'name') {
+    fetch(`/api/untagged?limit=${limit}&offset=${offset}&sortBy=${encodeURI(sortBy)}`, { credentials: 'same-origin' })
         .then(function(response) {
             return response.json();
         })
@@ -20,7 +20,7 @@ function getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset) {
                 setTimeout(function () {
                     offset += limit;
                     console.log("Reading next from " + offset);
-                    getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset);
+                    getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset, sortBy);
                 }, 10);
             } else {
                 resolve(data);
@@ -32,9 +32,9 @@ function getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset) {
         });
 }
 
-export function getThumbnailsDataWithUntagged(limit, offset) {
+export function getThumbnailsDataWithUntagged(limit, offset, sortBy = 'name') {
     return new Promise(function (resolve, reject) {
-        getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset)
+        getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset, sortBy)
     });
 }
 

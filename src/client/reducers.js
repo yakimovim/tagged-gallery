@@ -28,8 +28,21 @@ const reducer = (state, action) => {
         }
         case ActionTypes.SET_SEARCH_TEXT:
         {
+            let sortBy = state.sortBy;
+            if(!!action.searchText && !sortBy.endsWith("name")) {
+                sortBy = "name";
+            }
+
             const newState = Object.assign({}, state, {
-                searchText: action.searchText
+                searchText: action.searchText,
+                sortBy: sortBy
+            });
+            return newState;
+        }
+        case ActionTypes.SET_SORT_BY:
+        {
+            const newState = Object.assign({}, state, {
+                sortBy: action.sortBy
             });
             return newState;
         }
