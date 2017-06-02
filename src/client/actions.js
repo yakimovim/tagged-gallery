@@ -69,6 +69,22 @@ export function getPrevPage() {
     }
 }
 
+export function getRandomThumbnails() {
+    const state = store.getState();
+    Data.getRandomThumbnails(state.searchText, state.pageSize)
+        .then(function (data) {
+            store.dispatch({
+                type: ActionTypes.GET_THUMBNAILS_PAGE.SUCCESS,
+                pageIndex: 1,
+                total: state.pageSize,
+                thumbnails: data.items
+            });
+        })
+        .catch(function () {
+            store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.FAILURE });
+        });
+}
+
 export function search(searchText) {
     store.dispatch({ type: ActionTypes.SET_SEARCH_TEXT, searchText: searchText });
     const state = store.getState();

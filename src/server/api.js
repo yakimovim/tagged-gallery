@@ -78,6 +78,22 @@ export default class TaggedGalleryApi {
         return tagsData;
     }
 
+    async getRandomImages(tagsArray, limit = 12) {
+        const tagsData = await this._mongoApi.getRandomFiles(tagsArray, _.toNumber(limit));
+
+        const api = new YandexDiskApi(this._oAuthToken);
+        const imageData = await Promise.all(_(tagsData.items).map(i => api.getImagePreview(i.name)).value());
+
+        tagsData.items = _(tagsData.items).map(mi => {
+            const preview = _.find(imageData, p => p.name === mi.name);
+            preview.tags = mi.tags;
+            return preview;
+        })
+            .filter(i => !!i)
+            .value();
+        return tagsData;
+    }
+
     async saveTags(name, tags) {
         if (!!name) {
             const tagsArray = _((tags || '').split(',')).map(t => t.trim()).filter(t => !!t).value();

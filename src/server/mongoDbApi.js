@@ -71,6 +71,38 @@ export default class MongoDbApi {
             });
     }
 
+    getRandomFiles(tagsArray, limit) {
+        return this._connect()
+            .then(function (db) {
+                return new Promise(function (resolve, reject) {
+                    const imageTags = db.collection(config.mongoDbCollection);
+
+                    const pipelineSteps = [];
+
+                    if (!!tagsArray && tagsArray.length > 0) {
+                        const tagsRegexes = _(tagsArray).map(t => new RegExp('^' + t, 'i')).value();
+                        pipelineSteps.push({ "$match": { "tags": { "$all": tagsRegexes } } });
+                    }
+
+                    pipelineSteps.push({ "$sample": { "size": limit } });
+
+                    imageTags.aggregate(pipelineSteps).toArray(function (err, data) {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve({
+                                "items": data,
+                                "limit": limit,
+                                "offset": 0,
+                                "total": limit
+                            });
+                        }
+                    });
+                });
+            });
+    }
+
     saveTags(name, tags) {
         return this._connect()
             .then(function (db) {

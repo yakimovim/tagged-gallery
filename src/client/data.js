@@ -10,6 +10,16 @@ export function getThumbnails(search = '', offset = 0, limit = 12, sortBy = 'nam
         });
 }
 
+export function getRandomThumbnails(search = '', limit = 12) {
+    return fetch(`/api/random?search=${encodeURI(search || '')}&limit=${limit}`, { credentials: 'same-origin' })
+        .then(function (response) {
+            return response.json();
+        })
+        .catch(function () {
+            console.error("Can't get random preview of images");
+        });
+}
+
 function getThumbnailsDataWithUntaggedInternal(resolve, reject, limit, offset, sortBy = 'name') {
     fetch(`/api/untagged?limit=${limit}&offset=${offset}&sortBy=${encodeURI(sortBy)}`, { credentials: 'same-origin' })
         .then(function(response) {

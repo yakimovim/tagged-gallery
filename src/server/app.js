@@ -46,6 +46,14 @@ app.get('/api/image', function (req, res) {
         });
 });
 
+app.get('/api/random', function (req, res) {
+    const api = new TaggedGalleryApi(req.cookies.access_token);
+    api.getRandomImages(req.query.search, req.query.limit)
+        .then(function (data) {
+            res.json(data);
+        });
+});
+
 app.post('/api/saveTags', function (req, res) {
     const api = new TaggedGalleryApi(req.cookies.access_token);
     api.saveTags(req.body.name, req.body.tags)
