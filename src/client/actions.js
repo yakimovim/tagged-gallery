@@ -20,13 +20,19 @@ function getThumbnails(searchText, offset, pageSize, sortBy) {
         });
 }
 
-export function getThumbnailsPage(searchText, pageIndex, pageSize) {
+export function getThumbnailsPage(searchText, pageIndex, pageSize, randomMode) {
     const state = store.getState();
     if(searchText != state.searchText
     || pageIndex != state.pageIndex
-    || pageSize != state.pageSize) {
+    || pageSize != state.pageSize
+    || randomMode != state.randomMode) {
+        store.dispatch({ type: ActionTypes.SET_RANDOM_MODE, randomMode: randomMode });
         store.dispatch({ type: ActionTypes.SET_SEARCH_TEXT, searchText: decodeURI(searchText) });
-        getThumbnails(searchText, (pageIndex - 1) * pageSize, pageSize, state.sortBy);
+        if(randomMode) {
+            getRandomThumbnails();
+        } else {
+            getThumbnails(searchText, (pageIndex - 1) * pageSize, pageSize, state.sortBy);
+        }
     }
 }
 
@@ -73,6 +79,11 @@ export function getRandomThumbnails() {
     store.dispatch({ type: ActionTypes.SET_RANDOM_MODE, randomMode: true });
     store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS });
     const state = store.getState();
+    if(state.searchText != "") {
+        history.replace(`/${encodeURI(state.searchText)}/random`);
+    } else {
+        history.replace(`/random`);
+    }    
     Data.getRandomThumbnails(state.searchText, state.pageSize)
         .then(function (data) {
             store.dispatch({

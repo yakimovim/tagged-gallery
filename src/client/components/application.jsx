@@ -14,13 +14,15 @@ export class Application extends React.Component {
         super(props);
         const searchText = props.match.params.searchText || "";
         const pageIndex = _.toInteger(props.match.params.pageId) || 1;
-        this.props.onGetThumbnailsPage(searchText, pageIndex);
+        const randomMode = props.match.params.pageId === "random";
+        this.props.onGetThumbnailsPage(searchText, pageIndex, randomMode);
     }
 
     componentWillReceiveProps(nextProps) {
         const searchText = nextProps.match.params.searchText || "";
         const pageIndex = _.toInteger(nextProps.match.params.pageId) || 1;
-        this.props.onGetThumbnailsPage(searchText, pageIndex);
+        const randomMode = nextProps.match.params.pageId === "random";
+        this.props.onGetThumbnailsPage(searchText, pageIndex, randomMode);
     }
 
     render() {
@@ -43,8 +45,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onGetThumbnailsPage: function (searchText, pageIndex) {
-            getThumbnailsPage(searchText, pageIndex, 12);
+        onGetThumbnailsPage: function (searchText, pageIndex, randomMode) {
+            getThumbnailsPage(searchText, pageIndex, 12, randomMode);
         }
     }
 }
