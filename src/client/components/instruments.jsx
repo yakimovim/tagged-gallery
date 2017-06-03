@@ -10,6 +10,9 @@ export class Instruments extends React.Component {
     }
 
     render() {
+        if(this.props.randomMode) {
+            return null;
+        }
 
         const options = this.props.hasSearchText 
             ? [
@@ -37,6 +40,7 @@ export class Instruments extends React.Component {
 }
 
 Instruments.propTypes = {
+    randomMode: PropTypes.bool.isRequired,
     hasSearchText: PropTypes.bool.isRequired,
     sortBy: PropTypes.string.isRequired,
     onSortChanged: PropTypes.func.isRequired,
@@ -44,6 +48,7 @@ Instruments.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        randomMode: state.randomMode,
         hasSearchText: !!state.searchText,
         sortBy: state.sortBy
     }

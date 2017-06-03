@@ -6,6 +6,10 @@ import { getNextPage, getPrevPage } from '../actions.js'
 
 export class Paginator extends React.Component {
     render() {
+        if(this.props.randomMode) {
+            return null;
+        }
+
         return <Row>
             <Pager>
                 <Pager.Item previous href="#" onClick={this.props.onGetPrevPage.bind(this)}>&larr; Previous</Pager.Item>
@@ -16,12 +20,15 @@ export class Paginator extends React.Component {
 }
 
 Paginator.propTypes = {
+    randomMode: PropTypes.bool.isRequired,
     onGetNextPage: PropTypes.func.isRequired,
     onGetPrevPage: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
-    return {}
+    return {
+        randomMode: state.randomMode
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {

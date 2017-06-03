@@ -60,6 +60,13 @@ const reducer = (state, action) => {
             });
             return newState;
         }
+        case ActionTypes.SET_RANDOM_MODE:
+        {
+            const newState = Object.assign({}, state, {
+                randomMode: action.randomMode
+            });
+            return newState;
+        }
         default:
             return state;
     }

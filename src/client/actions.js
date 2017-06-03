@@ -70,8 +70,9 @@ export function getPrevPage() {
 }
 
 export function getRandomThumbnails() {
-    const state = store.getState();
+    store.dispatch({ type: ActionTypes.SET_RANDOM_MODE, randomMode: true });
     store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS });
+    const state = store.getState();
     Data.getRandomThumbnails(state.searchText, state.pageSize)
         .then(function (data) {
             store.dispatch({
@@ -87,6 +88,7 @@ export function getRandomThumbnails() {
 }
 
 export function search(searchText) {
+    store.dispatch({ type: ActionTypes.SET_RANDOM_MODE, randomMode: false });
     store.dispatch({ type: ActionTypes.SET_SEARCH_TEXT, searchText: searchText });
     const state = store.getState();
     if(searchText != "") {

@@ -9,7 +9,8 @@ const initialState = {
     total: 0,
     thumbnails: [],
     fullImage: '',
-    loading: false
+    loading: false,
+    randomMode: false
 }
 
 const store = createStore(reducer, initialState);
