@@ -78,7 +78,11 @@ export default class TaggedGalleryApi {
         return tagsData;
     }
 
-    async getRandomImages(tagsArray, limit = 12) {
+    async getRandomImages(search, limit = 12) {
+        let tagsArray = [];
+        if(!!search) {
+            tagsArray = _((search || '').split(',')).map(t => t.trim()).filter(t => !!t).value();
+        }
         const tagsData = await this._mongoApi.getRandomFiles(tagsArray, _.toNumber(limit));
 
         const api = new YandexDiskApi(this._oAuthToken);

@@ -71,6 +71,7 @@ export function getPrevPage() {
 
 export function getRandomThumbnails() {
     const state = store.getState();
+    store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS });
     Data.getRandomThumbnails(state.searchText, state.pageSize)
         .then(function (data) {
             store.dispatch({
