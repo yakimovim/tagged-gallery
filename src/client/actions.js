@@ -23,7 +23,7 @@ function getThumbnails(searchText, offset, pageSize, sortBy) {
 export function getThumbnailsPage(searchText, pageIndex, pageSize, randomMode) {
     const state = store.getState();
     if(searchText != state.searchText
-    || pageIndex != state.pageIndex
+    || (!randomMode && pageIndex != state.pageIndex)
     || pageSize != state.pageSize
     || randomMode != state.randomMode) {
         store.dispatch({ type: ActionTypes.SET_RANDOM_MODE, randomMode: randomMode });
@@ -83,7 +83,7 @@ export function getRandomThumbnails() {
         history.replace(`/${encodeURI(state.searchText)}/random`);
     } else {
         history.replace(`/random`);
-    }    
+    }
     Data.getRandomThumbnails(state.searchText, state.pageSize)
         .then(function (data) {
             store.dispatch({
