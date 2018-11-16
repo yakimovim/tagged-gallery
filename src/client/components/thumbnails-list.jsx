@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Row } from 'react-bootstrap'
 import Thumbnail from './thumbnail.jsx'
 
 export default class ThumbnailsList extends React.PureComponent {
     render() {
-        return <Row>
+        return <div className="row">
             {this.props.thumbnails.map(thumbnail => {
                 return (<Thumbnail
                     key={thumbnail.name}
@@ -13,7 +12,7 @@ export default class ThumbnailsList extends React.PureComponent {
                     preview={thumbnail.preview}
                     tags={thumbnail.tags} />)
             })}
-        </Row>
+        </div>
     }
 }
 

@@ -1,49 +1,70 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Image, Modal } from 'react-bootstrap'
-import ActionTypes from '../actionTypes.js'
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import ActionTypes from "../actionTypes.js";
 
 export class FullImageDialog extends React.Component {
-    handleCloseDialog() {
-        this.props.onCloseDialog();
+  handleCloseDialog() {
+    this.props.onCloseDialog();
+  }
+
+  render() {
+    if (!this.props.href) {
+      return null;
     }
 
-    render() {
-        const showDialog = !!this.props.href;
-
-        return (<Modal
-            bsSize="large"
-            show={showDialog}
-            onHide={this.handleCloseDialog.bind(this)}
-        >
-            <Modal.Header closeButton />
-            <Modal.Body>
-                <Image className="img-center" responsive src={this.props.href} />
-            </Modal.Body>
-        </Modal>);
-    }
+    return (
+      <div className="modal d-flex" tabIndex="-1" role="dialog">
+        <div className="modal-dialog full-image-modal" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                onClick={this.handleCloseDialog.bind(this)}
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="image-scroller">
+                <img
+                  className="mx-auto d-block img-fluid"
+                  src={this.props.href}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 FullImageDialog.propTypes = {
-    href: PropTypes.string.isRequired,
-    onCloseDialog: PropTypes.func.isRequired
-}
+  href: PropTypes.string.isRequired,
+  onCloseDialog: PropTypes.func.isRequired
+};
 
-const mapStateToProps = (state) => {
-    return {
-        href: state.fullImage
+const mapStateToProps = state => {
+  return {
+    href: state.fullImage
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onCloseDialog: function() {
+      dispatch({
+        type: ActionTypes.REMOVE_FULL_IMAGE
+      });
     }
-}
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onCloseDialog: function () {
-            dispatch({
-                type: ActionTypes.REMOVE_FULL_IMAGE
-            })
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FullImageDialog)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FullImageDialog);

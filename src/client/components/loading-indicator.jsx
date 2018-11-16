@@ -1,22 +1,25 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Modal } from 'react-bootstrap'
+import React from "react";
+import PropTypes from "prop-types";
 
 export default class LoadingIndicator extends React.Component {
-    render() {
-        return <Modal
-            bsSize="small"
-            show={this.props.loading}
-            container={this.props.container}
-        >
-            <Modal.Body>
-                <div id="loadingImg" />
-            </Modal.Body>
-        </Modal>
+  render() {
+    if (!this.props.loading) {
+      return null;
     }
+    return (
+      <div className="modal d-flex" tabIndex="-1" role="dialog">
+        <div className="modal-dialog modal-sm" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div id="loadingImg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 LoadingIndicator.propTypes = {
-    loading: PropTypes.bool.isRequired,
-    container: PropTypes.object.isRequired
-}
+  loading: PropTypes.bool.isRequired
+};

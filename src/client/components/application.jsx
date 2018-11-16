@@ -2,7 +2,6 @@ import _ from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Grid } from 'react-bootstrap'
 import Header from './header.jsx'
 import Searcher from './searcher.jsx'
 import ImageTable from './image-table.jsx'
@@ -26,12 +25,12 @@ export class Application extends React.Component {
     }
 
     render() {
-        return <Grid>
+        return <div className="container">
             <FullImageDialog />
             <Header />
             <Searcher />
             <ImageTable />
-        </Grid>
+        </div>
     }
 }
 

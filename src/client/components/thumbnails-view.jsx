@@ -1,17 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Row } from 'react-bootstrap'
-import Thumbnail from './thumbnail.jsx'
 import LoadingIndicator from './loading-indicator.jsx'
 import ThumbnailsList from './thumbnails-list.jsx'
 
 export class ThumbnailsView extends React.Component {
     render() {
-        return <Row className="modal-container">
-            <LoadingIndicator loading={this.props.loading} container={this} />
+        return <div className="row modal-container">
+            <LoadingIndicator loading={this.props.loading} />
             <ThumbnailsList thumbnails={this.props.thumbnails} />
-        </Row>
+        </div>
     }
 }
 

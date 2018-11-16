@@ -5,7 +5,7 @@ import config from "../config/configuration";
 
 export default class MongoDbApi {
   _getMongoClient() {
-    return MongoClient.connect(config.mongoDbUrl);
+    return MongoClient.connect(config.mongoDbUrl, { useNewUrlParser: true });
   }
 
   getTagsOfFiles(fileNamesArray) {
