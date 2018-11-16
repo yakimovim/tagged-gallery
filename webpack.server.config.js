@@ -2,6 +2,7 @@ var path = require('path');
 
 module.exports = {
     target: 'node',
+    mode: 'development',
     devtool: 'source-map',
     entry: ['babel-polyfill', './src/server/app.js'],
     output: {

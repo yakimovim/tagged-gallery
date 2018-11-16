@@ -5,12 +5,16 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     target: 'web',
+    mode: 'development',
     devtool: 'source-map',
     entry: ['./src/client/app.js'],
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist/client/'),
         publicPath: '/'
+    },
+    optimization: {
+        minimize: true
     },
     module: {
         rules: [
@@ -47,9 +51,6 @@ module.exports = {
                 'NODE_ENV': JSON.stringify('production')
             }
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true
-        }), //minify everything
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/client/index.template.html'
