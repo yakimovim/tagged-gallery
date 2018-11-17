@@ -5,7 +5,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     target: 'web',
-    mode: 'development',
+    // mode: 'development',
     devtool: 'source-map',
     entry: ['./src/client/app.js'],
     output: {
@@ -46,11 +46,11 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery"
         }),
-        // new webpack.DefinePlugin({ // <-- key to reducing React's size
-        //     'process.env': {
-        //         'NODE_ENV': JSON.stringify('production')
-        //     }
-        // }),
+        new webpack.DefinePlugin({ // <-- key to reducing React's size
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/client/index.template.html'
