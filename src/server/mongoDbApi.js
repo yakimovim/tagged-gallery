@@ -53,7 +53,7 @@ export default class MongoDbApi {
               reject(err);
             } else {
               imageTags
-                .count({ tags: { $all: tagsRegexes } })
+                .countDocuments({ tags: { $all: tagsRegexes } })
                 .then(function(total) {
                   resolve({
                     items: data,

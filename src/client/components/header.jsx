@@ -18,7 +18,7 @@ export class Header extends React.Component {
   render() {
     return (
       <div className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           Tagged Gallery
         </a>
         <ul className="navbar-nav mr-auto">
