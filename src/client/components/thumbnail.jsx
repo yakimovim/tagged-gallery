@@ -25,20 +25,18 @@ export class Thumbnail extends React.Component {
 
   render() {
     return (
-      <div className="imageDiv col-md-4 row">
-        <div className="imgWrapper col-md-10 col-md-offset-1">
+      <div className="imageDiv">
+        <div className="imgWrapper">
           <img
-            className="img-thumbnail mx-auto d-block"
+            className="img-thumbnail"
             src={this.props.preview}
             onClick={this.handleShowFullImage.bind(this)}
           />
         </div>
-        <div className="col-md-10 col-md-offset-1 input-group">
-          <TagsInput
-            value={this.state.tags}
-            onChange={this.handleTagsChange.bind(this)}
-          />
-        </div>
+        <TagsInput
+          value={this.state.tags}
+          onChange={this.handleTagsChange.bind(this)}
+        />
       </div>
     );
   }

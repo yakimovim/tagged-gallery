@@ -38,23 +38,17 @@ export class Instruments extends React.Component {
         ];
 
     return (
-      <div className="container">
-        <div className="row">
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text">
-                Sort by
-              </span>
-            </div>
-            <select
-              className="form-control"
-              value={this.props.sortBy}
-              onChange={this.handleSortingChange.bind(this)}
-            >
-              {options}
-            </select>
-          </div>
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text">Sort by</span>
         </div>
+        <select
+          className="form-control"
+          value={this.props.sortBy}
+          onChange={this.handleSortingChange.bind(this)}
+        >
+          {options}
+        </select>
       </div>
     );
   }

@@ -17,33 +17,27 @@ export class Header extends React.Component {
 
   render() {
     return (
-      <div className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="/">
+      <header className="flex">
+        <a className="brand" href="/">
           Tagged Gallery
         </a>
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              id="untaggedButton"
-              href="#"
-              onClick={this.handleFindUntagged.bind(this)}
-            >
-              Find untagged
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              id="randomButton"
-              href="#"
-              onClick={this.handleFindRandom.bind(this)}
-            >
-              Random images
-            </a>
-          </li>
-        </ul>
-      </div>
+        <a
+          className="header-link"
+          id="untaggedButton"
+          href="#"
+          onClick={this.handleFindUntagged.bind(this)}
+        >
+          Find untagged
+        </a>
+        <a
+          className="header-link"
+          id="randomButton"
+          href="#"
+          onClick={this.handleFindRandom.bind(this)}
+        >
+          Random images
+        </a>
+      </header>
     );
   }
 }

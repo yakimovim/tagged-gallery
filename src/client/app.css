@@ -1,37 +1,138 @@
+:root {
+  box-sizing: border-box;
+}
+
+body {
+  --back-color: #eee;
+  --font-color: black;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+.container > * + * {
+    margin-top: 1em;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-column > * {
+  margin-bottom: 0;
+}
+
+.flex-column > * + * {
+  margin-top: 1em;
+}
+header {
+  background-color: var(--back-color);
+  border-radius: 0.5em;
+  padding: 1em;
+  align-items: baseline;
+}
+
+header > * + * {
+    padding-left: 1.5em;
+}
+
+.brand {
+    color: var(--font-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.header-link {
+    color: var(--font-color);
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.search-row {
+    justify-content: center;
+}
+
+.search-field {
+    flex: 0 0 80%;
+}
+
+.page-link {
+  display: inline-block;
+  background-color: var(--back-color);
+  color: var(--font-color);
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+}
+
+.next-page {
+  margin-left: auto;
+}
+
 .imageDiv {
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em;
+  flex: 1 0 calc(33.3333% - 1em);
+  background-color: var(--back-color);
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
+
+.react-tagsinput {
+  width: 100%;
+  margin-top: 0.5em;
+  border-radius: .2em;
+}
+
+.react-tagsinput-tag {
+  background-color: #ddd;
 }
 
 .imgWrapper {
-    height: 200px;
+  height: 200px;
+}
+
+.imgWrapper img {
+  cursor: zoom-in;
 }
 
 .image-scroller {
-    overflow-y: scroll;
-    height: 36rem;
+  overflow-y: scroll;
+  height: 36rem;
 }
 
 .full-image-modal {
-    width: 90% !important;
-    max-width: 90%;
+  width: 90% !important;
+  max-width: 90%;
 }
 
 .modal-container {
   position: relative;
 }
 
-.modal-container .modal, .modal-container .modal-backdrop {
+.modal-container .modal,
+.modal-container .modal-backdrop {
   position: absolute;
 }
 
 #loadingImg {
-    width: 200px;
-    height: 200px;
-    background-image: url('./loading.gif');
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.react-tagsinput-tag {
-    background-color: #ddd;
+  width: 200px;
+  height: 200px;
+  background-image: url("./loading.gif");
+  margin-left: auto;
+  margin-right: auto;
 }

@@ -26,23 +26,25 @@ export class Searcher extends React.Component {
 
   render() {
     return (
-      <div className="row justify-content-center my-3">
-        <div className="input-group col-8">
-          <input
-            type="text"
-            className="form-control"
-            value={this.state.searchText}
-            onChange={this.handleSearchTextChange.bind(this)}
-            onKeyPress={this.handleKeyPress.bind(this)}
-          />
-          <div className="input-group-append">
-            <button
-              type="button"
-              className="btn btn-light"
-              onClick={this.handleSeachClick.bind(this)}
-            >
-              Search
-            </button>
+      <div className="flex search-row">
+        <div className="search-field">
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.searchText}
+              onChange={this.handleSearchTextChange.bind(this)}
+              onKeyPress={this.handleKeyPress.bind(this)}
+            />
+            <div className="input-group-append">
+              <button
+                type="button"
+                className="btn btn-light"
+                onClick={this.handleSeachClick.bind(this)}
+              >
+                Search
+              </button>
+            </div>
           </div>
         </div>
       </div>

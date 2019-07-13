@@ -10,29 +10,21 @@ export class Paginator extends React.Component {
     }
 
     return (
-      <div className="container">
-        <div className="row">
-          <ul className="pagination justify-content-center">
-            <li className="page-item">
-              <a
-                className="page-link"
-                href="#"
-                onClick={this.props.onGetPrevPage.bind(this)}
-              >
-                &larr; Previous
-              </a>
-            </li>
-            <li className="page-item">
-              <a
-                className="page-link"
-                href="#"
-                onClick={this.props.onGetNextPage.bind(this)}
-              >
-                Next &rarr;
-              </a>
-            </li>
-          </ul>
-        </div>
+      <div className="flex">
+        <a
+          className="page-link prev-page"
+          href="#"
+          onClick={this.props.onGetPrevPage.bind(this)}
+        >
+          &larr; Previous
+        </a>
+        <a
+          className="page-link next-page"
+          href="#"
+          onClick={this.props.onGetNextPage.bind(this)}
+        >
+          Next &rarr;
+        </a>
       </div>
     );
   }
