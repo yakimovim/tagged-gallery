@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -42,6 +43,9 @@ module.exports = {
         ]
     },
     plugins: [
+        new HardSourceWebpackPlugin({
+            cacheDirectory: 'node_modules/.cache/hard-source/client/[confighash]'
+        }),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
