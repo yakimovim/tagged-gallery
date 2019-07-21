@@ -14,27 +14,20 @@ export class FullImageDialog extends React.Component {
     }
 
     return (
-      <div className="modal d-flex" tabIndex="-1" role="dialog">
-        <div className="modal-dialog full-image-modal" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                onClick={this.handleCloseDialog.bind(this)}
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
+      <div>
+        <div class="full-screen-dialog-backdrop" />
+        <div class="full-screen-dialog">
+          <div class="dialog-header">
+            <div
+              class="close-button"
+              onClick={this.handleCloseDialog.bind(this)}
+            >
+              Close
             </div>
-            <div className="modal-body">
-              <div className="image-scroller">
-                <img
-                  className="mx-auto d-block img-fluid"
-                  src={this.props.href}
-                />
-              </div>
+          </div>
+          <div class="dialog-body">
+            <div class="full-image-container">
+              <img className="full-image" src={this.props.href} />
             </div>
           </div>
         </div>

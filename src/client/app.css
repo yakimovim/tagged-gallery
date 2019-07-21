@@ -37,6 +37,7 @@ body {
 .flex-column > * + * {
   margin-top: 1em;
 }
+
 header {
   background-color: var(--back-color);
   border-radius: 0.5em;
@@ -116,9 +117,70 @@ header > * + * {
   height: 36rem;
 }
 
-.full-image-modal {
-  width: 90% !important;
-  max-width: 90%;
+.full-screen-dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.full-screen-dialog {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  right: 1em;
+  bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  z-index: 11;
+  border-radius: 0.5em;
+}
+
+.dialog-header {
+  padding: 1em;
+  border-bottom: 1px solid var(--back-color);
+  position: relative;
+}
+
+.dialog-body {
+  flex-grow: 1;
+  position: relative;
+}
+
+.full-image-container {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  right: 1em;
+  bottom: 1em;
+  overflow: auto;
+}
+
+.close-button {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.3em;
+  font-size: 2em;
+  height: 1em;
+  width: 1em;
+  text-indent: 10em;
+  overflow: hidden;
+  border: 0;
+}
+
+.close-button::after {
+  position: absolute;
+  line-height: 0.5;
+  top: 0.2em;
+  left: 0.1em;
+  text-indent: 0;
+  content: "\00D7";
 }
 
 .modal-container {
@@ -130,10 +192,22 @@ header > * + * {
   position: absolute;
 }
 
+.loading-indicator {
+  position: fixed;
+  top: 10%;
+  left: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  padding: 0;
+  z-index: 11;
+  border-radius: 0.2em;
+  border: 1px solid var(--back-color);
+}
+
 #loadingImg {
   width: 200px;
   height: 200px;
   background-image: url("./loading.gif");
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
