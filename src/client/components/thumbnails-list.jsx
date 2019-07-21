@@ -5,7 +5,7 @@ import Thumbnail from "./thumbnail.jsx";
 export default class ThumbnailsList extends React.PureComponent {
   render() {
     return (
-      <div className="flex flex-wrap">
+      <div className="thumbnails-grid">
         {this.props.thumbnails.map(thumbnail => {
           return (
             <Thumbnail

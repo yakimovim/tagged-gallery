@@ -83,25 +83,21 @@ header > * + * {
   margin-left: auto;
 }
 
+.thumbnails-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-flow: 1fr;
+  grid-gap: 1em;
+}
+
 .imageDiv {
   display: flex;
   flex-direction: column;
   margin: 0.5em;
-  flex: 1 0 calc(33.3333% - 1em);
   background-color: var(--back-color);
   padding: 0.5em;
   border-radius: 0.5em;
   align-items: center;
-}
-
-.react-tagsinput {
-  width: 100%;
-  margin-top: 0.5em;
-  border-radius: .2em;
-}
-
-.react-tagsinput-tag {
-  background-color: #ddd;
 }
 
 .imgWrapper {
@@ -112,9 +108,14 @@ header > * + * {
   cursor: zoom-in;
 }
 
-.image-scroller {
-  overflow-y: scroll;
-  height: 36rem;
+.react-tagsinput {
+  width: 100%;
+  margin-top: 0.5em;
+  border-radius: .2em;
+}
+
+.react-tagsinput-tag {
+  background-color: var(--back-color);
 }
 
 .full-screen-dialog-backdrop {
@@ -194,7 +195,7 @@ header > * + * {
 
 .loading-indicator {
   position: fixed;
-  top: 10%;
+  top: 40%;
   left: calc(50% - 100px);
   width: 200px;
   height: 200px;
@@ -203,6 +204,7 @@ header > * + * {
   z-index: 11;
   border-radius: 0.2em;
   border: 1px solid var(--back-color);
+  background-color: white;
 }
 
 #loadingImg {
