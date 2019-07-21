@@ -4,7 +4,7 @@ import ActionTypes from './actionTypes.js';
 import * as Data from './data.js'
 import history from './history.js'
 
-function getThumbnails(searchText, offset, pageSize, sortBy) {
+function retrieveThumbnails(searchText, offset, pageSize, sortBy) {
     store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS });
     Data.getThumbnails(searchText, offset, pageSize, sortBy)
         .then(function (data) {
@@ -22,6 +22,12 @@ function getThumbnails(searchText, offset, pageSize, sortBy) {
 
 export function getThumbnailsPage(searchText, pageIndex, pageSize, randomMode) {
     const state = store.getState();
+
+    // Do not load anything while some loading is in progress.
+    if(state.loading) {
+        return;
+    }
+
     if(searchText != state.searchText
     || (!randomMode && pageIndex != state.pageIndex)
     || pageSize != state.pageSize
@@ -29,9 +35,9 @@ export function getThumbnailsPage(searchText, pageIndex, pageSize, randomMode) {
         store.dispatch({ type: ActionTypes.SET_RANDOM_MODE, randomMode: randomMode });
         store.dispatch({ type: ActionTypes.SET_SEARCH_TEXT, searchText: decodeURI(searchText) });
         if(randomMode) {
-            getRandomThumbnails();
+            retrieveRandomThumbnails();
         } else {
-            getThumbnails(searchText, (pageIndex - 1) * pageSize, pageSize, state.sortBy);
+            retrieveThumbnails(searchText, (pageIndex - 1) * pageSize, pageSize, state.sortBy);
         }
     }
 }
@@ -58,7 +64,6 @@ export function getNextPage() {
         } else {
             history.replace(`/${state.pageIndex + 1}`);
         }
-        getThumbnails(state.searchText, state.pageIndex * state.pageSize, state.pageSize, state.sortBy);
     }
 }
 
@@ -70,20 +75,13 @@ export function getPrevPage() {
         } else {
             history.replace(`/${state.pageIndex - 1}`);
         }
-        let offset = (state.pageIndex - 2) * state.pageSize;
-        getThumbnails(state.searchText, offset, state.pageSize, state.sortBy);
     }
 }
 
-export function getRandomThumbnails() {
+function retrieveRandomThumbnails() {
     store.dispatch({ type: ActionTypes.SET_RANDOM_MODE, randomMode: true });
     store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS });
     const state = store.getState();
-    if(state.searchText != "") {
-        history.replace(`/${encodeURI(state.searchText)}/random`);
-    } else {
-        history.replace(`/random`);
-    }
     Data.getRandomThumbnails(state.searchText, state.pageSize)
         .then(function (data) {
             store.dispatch({
@@ -98,6 +96,20 @@ export function getRandomThumbnails() {
         });
 }
 
+export function getRandomThumbnails() {
+    const state = store.getState();
+
+    if(!state.randomMode) {
+        if(state.searchText != "") {
+            history.replace(`/${encodeURI(state.searchText)}/random`);
+        } else {
+            history.replace(`/random`);
+        }
+    } else {
+        retrieveRandomThumbnails();
+    }
+}
+
 export function search(searchText) {
     store.dispatch({ type: ActionTypes.SET_RANDOM_MODE, randomMode: false });
     store.dispatch({ type: ActionTypes.SET_SEARCH_TEXT, searchText: searchText });
@@ -107,7 +119,7 @@ export function search(searchText) {
     } else {
         history.replace(`/1`);
     }
-    getThumbnails(searchText, 0, state.pageSize, state.sortBy);
+    retrieveThumbnails(searchText, 0, state.pageSize, state.sortBy);
 }
 
 export function changeSorting(sortBy) {
@@ -118,7 +130,7 @@ export function changeSorting(sortBy) {
     } else {
         history.replace(`/${state.pageIndex}`);
     }
-    getThumbnails(state.searchText, (state.pageIndex - 1) * state.pageSize, state.pageSize, state.sortBy);
+    retrieveThumbnails(state.searchText, (state.pageIndex - 1) * state.pageSize, state.pageSize, state.sortBy);
 }
 
 export function findFirstPageWithUntaggedImage() {

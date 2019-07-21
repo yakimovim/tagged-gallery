@@ -101,7 +101,7 @@ header > * + * {
 }
 
 .imgWrapper {
-  height: 200px;
+  flex-grow: 1;
 }
 
 .imgWrapper img {
