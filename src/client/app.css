@@ -158,6 +158,7 @@ header a:hover {
 .imgWrapper img {
   cursor: zoom-in;
   width: 100%;
+
 }
 
 .react-tagsinput {
@@ -211,6 +212,11 @@ header a:hover {
   right: 1em;
   bottom: 1em;
   overflow: auto;
+}
+
+.full-image {
+  display: block;
+  margin: 0 auto;
 }
 
 .close-button {
