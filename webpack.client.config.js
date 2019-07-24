@@ -4,6 +4,7 @@ const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   target: "web",
@@ -52,6 +53,7 @@ module.exports = {
     ]
   },
   plugins: [
+    // new BundleAnalyzerPlugin(),
     new HardSourceWebpackPlugin({
       cacheDirectory: "node_modules/.cache/hard-source/client/[confighash]"
     }),
