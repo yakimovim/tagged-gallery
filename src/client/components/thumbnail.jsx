@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import TagsInput from "react-tagsinput";
-import _ from "lodash";
 import { saveTags } from "../data.js";
 import { getFullImage } from "../actions.js";
 

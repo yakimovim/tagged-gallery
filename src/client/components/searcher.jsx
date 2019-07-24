@@ -28,24 +28,19 @@ export class Searcher extends React.Component {
     return (
       <div className="flex search-row">
         <div className="search-field">
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.searchText}
-              onChange={this.handleSearchTextChange.bind(this)}
-              onKeyPress={this.handleKeyPress.bind(this)}
-            />
-            <div className="input-group-append">
-              <button
-                type="button"
-                className="btn btn-light"
-                onClick={this.handleSeachClick.bind(this)}
-              >
-                Search
-              </button>
-            </div>
-          </div>
+          <input
+            type="text"
+            className="search-input"
+            value={this.state.searchText}
+            onChange={this.handleSearchTextChange.bind(this)}
+            onKeyPress={this.handleKeyPress.bind(this)}
+          />
+          <input
+            type="button"
+            value="Search"
+            className="search-button"
+            onClick={this.handleSeachClick.bind(this)}
+          />
         </div>
       </div>
     );

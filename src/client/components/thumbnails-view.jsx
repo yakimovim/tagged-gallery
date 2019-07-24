@@ -6,7 +6,7 @@ import ThumbnailsList from './thumbnails-list.jsx'
 
 export class ThumbnailsView extends React.Component {
     render() {
-        return <div className="modal-container">
+        return <div>
             <LoadingIndicator loading={this.props.loading} />
             <ThumbnailsList thumbnails={this.props.thumbnails} />
         </div>

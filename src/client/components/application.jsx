@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -7,19 +6,20 @@ import Searcher from './searcher.jsx'
 import ImageTable from './image-table.jsx'
 import FullImageDialog from './full-image-dialog.jsx'
 import { getThumbnailsPage } from '../actions.js'
+import toInteger from '../utils.js'
 
 export class Application extends React.Component {
     constructor(props) {
         super(props);
         const searchText = props.match.params.searchText || "";
-        const pageIndex = _.toInteger(props.match.params.pageId) || 1;
+        const pageIndex = toInteger(props.match.params.pageId) || 1;
         const randomMode = props.match.params.pageId === "random";
         this.props.onGetThumbnailsPage(searchText, pageIndex, randomMode);
     }
 
     componentWillReceiveProps(nextProps) {
         const searchText = nextProps.match.params.searchText || "";
-        const pageIndex = _.toInteger(nextProps.match.params.pageId) || 1;
+        const pageIndex = toInteger(nextProps.match.params.pageId) || 1;
         const randomMode = nextProps.match.params.pageId === "random";
         this.props.onGetThumbnailsPage(searchText, pageIndex, randomMode);
     }

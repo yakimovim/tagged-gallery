@@ -1,8 +1,8 @@
-import _ from 'lodash'
 import store from './store.js';
 import ActionTypes from './actionTypes.js';
 import * as Data from './data.js'
 import history from './history.js'
+import toInteger from './utils.js'
 
 function retrieveThumbnails(searchText, offset, pageSize, sortBy) {
     store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS });
@@ -10,7 +10,7 @@ function retrieveThumbnails(searchText, offset, pageSize, sortBy) {
         .then(function (data) {
             store.dispatch({
                 type: ActionTypes.GET_THUMBNAILS_PAGE.SUCCESS,
-                pageIndex: _.toInteger(data.offset / pageSize) + 1,
+                pageIndex: toInteger(data.offset / pageSize) + 1,
                 total: data.total,
                 thumbnails: data.items
             });
@@ -141,11 +141,11 @@ export function findFirstPageWithUntaggedImage() {
         .then(function (data) {
             store.dispatch({
                 type: ActionTypes.GET_THUMBNAILS_PAGE.SUCCESS,
-                pageIndex: _.toInteger(data.offset / data.limit) + 1,
+                pageIndex: toInteger(data.offset / data.limit) + 1,
                 total: data.total,
                 thumbnails: data.items
             });
-            history.replace(`/${_.toInteger(data.offset / data.limit) + 1}`);
+            history.replace(`/${toInteger(data.offset / data.limit) + 1}`);
         })
         .catch(function () {
             store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.FAILURE });
