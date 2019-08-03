@@ -57,10 +57,6 @@ module.exports = {
     new HardSourceWebpackPlugin({
       cacheDirectory: "node_modules/.cache/hard-source/client/[confighash]"
     }),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
-    }),
     new webpack.DefinePlugin({
       // <-- key to reducing React's size
       "process.env": {
