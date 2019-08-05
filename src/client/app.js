@@ -3,7 +3,7 @@ import "./css.js";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Router, Route, Switch } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Provider } from "preact-redux";
 import history from "./history.js";
 
 import { getCookie } from "./cookie.js";

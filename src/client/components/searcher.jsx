@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { connect } from "preact-redux";
 import { search } from "../actions.js";
 
 export class Searcher extends React.Component {

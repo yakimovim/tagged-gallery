@@ -28,8 +28,7 @@ module.exports = {
   resolve: {
     alias: {
       "react": "preact-compat",
-      "react-dom": "preact-compat",
-      "react-redux": "preact-redux",
+      "react-dom": "preact-compat"
     }
   },
   module: {
