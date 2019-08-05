@@ -64,6 +64,7 @@ export function getNextPage() {
         } else {
             history.replace(`/${state.pageIndex + 1}`);
         }
+        retrieveThumbnails(state.searchText, state.pageIndex * state.pageSize, state.pageSize, state.sortBy);
     }
 }
 
@@ -75,6 +76,7 @@ export function getPrevPage() {
         } else {
             history.replace(`/${state.pageIndex - 1}`);
         }
+        retrieveThumbnails(state.searchText, (state.pageIndex - 2) * state.pageSize, state.pageSize, state.sortBy);
     }
 }
 
@@ -105,9 +107,9 @@ export function getRandomThumbnails() {
         } else {
             history.replace(`/random`);
         }
-    } else {
-        retrieveRandomThumbnails();
     }
+
+    retrieveRandomThumbnails();
 }
 
 export function search(searchText) {
