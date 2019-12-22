@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "preact-redux";
+import { connect } from "react-redux";
 import ActionTypes from "../actionTypes.js";
 
 export class FullImageDialog extends React.Component {

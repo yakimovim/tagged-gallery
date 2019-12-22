@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "preact-redux";
+import { connect } from "react-redux";
 import TagsInput from "react-tagsinput";
 import { saveTags } from "../data.js";
 import { getFullImage } from "../actions.js";

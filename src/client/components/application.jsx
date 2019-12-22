@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'preact-redux'
+import { connect } from 'react-redux'
 import Header from './header.jsx'
 import Searcher from './searcher.jsx'
 import ImageTable from './image-table.jsx'

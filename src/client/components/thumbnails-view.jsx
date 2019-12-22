@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'preact-redux'
+import { connect } from 'react-redux'
 import LoadingIndicator from './loading-indicator.jsx'
 import ThumbnailsList from './thumbnails-list.jsx'
 
