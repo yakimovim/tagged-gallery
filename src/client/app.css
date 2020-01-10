@@ -55,6 +55,18 @@ header a:hover {
   text-decoration: underline;
 }
 
+@media (max-width: 30em) {
+  header.flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header.flex > * + * {
+    padding-left: 0;
+    padding-top: 0.5em;
+  }
+}
+
 .brand {
   color: var(--font-color);
   font-size: 1.5rem;
@@ -141,6 +153,12 @@ header a:hover {
   grid-gap: 1em;
 }
 
+@media (max-width: 30em) {
+  .thumbnails-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .imageDiv {
   display: flex;
   flex-direction: column;
@@ -194,6 +212,16 @@ header a:hover {
   border-radius: 0.5em;
 }
 
+@media (max-width: 30em) {
+  .full-screen-dialog {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+  }
+}
+
 .dialog-header {
   padding: 1em;
   border-bottom: 1px solid var(--back-color);
@@ -212,6 +240,15 @@ header a:hover {
   right: 1em;
   bottom: 1em;
   overflow: auto;
+}
+
+@media (max-width: 30em) {
+  .full-image-container {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 .full-image {
