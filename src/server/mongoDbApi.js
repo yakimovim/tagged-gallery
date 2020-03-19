@@ -5,7 +5,9 @@ import config from "../config/configuration";
 
 export default class MongoDbApi {
   _getMongoClient() {
-    return MongoClient.connect(config.mongoDbUrl, { useNewUrlParser: true });
+    return MongoClient.connect(config.mongoDbUrl, {
+      useNewUrlParser: true
+    });
   }
 
   getTagsOfFiles(fileNamesArray) {
@@ -115,16 +117,18 @@ export default class MongoDbApi {
 
       const imageTags = db.collection(config.mongoDbCollection);
 
-      return imageTags.update(
-        { name: name },
-        {
-          name: name,
-          tags: tags
-        },
-        { upsert: true }
-      ).then(() => {
+      return imageTags
+        .update(
+          { name: name },
+          {
+            name: name,
+            tags: tags
+          },
+          { upsert: true }
+        )
+        .then(() => {
           client.close();
-      });
+        });
     });
   }
 }
