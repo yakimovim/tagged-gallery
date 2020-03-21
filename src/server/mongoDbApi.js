@@ -7,128 +7,108 @@ export default class MongoDbApi {
   _getMongoClient() {
     return MongoClient.connect(config.mongoDbUrl, {
       useNewUrlParser: true
+      // useUnifiedTopology: true
     });
   }
 
-  getTagsOfFiles(fileNamesArray) {
-    return this._getMongoClient().then(function(client) {
-      return new Promise(function(resolve, reject) {
-        const db = client.db();
+  async getTagsOfFiles(fileNamesArray) {
+    const client = await this._getMongoClient();
 
-        const imageTags = db.collection(config.mongoDbCollection);
+    const db = client.db();
 
-        imageTags
-          .find({ name: { $in: fileNamesArray } })
-          .toArray(function(err, data) {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(data);
-            }
+    const imageTags = db.collection(config.mongoDbCollection);
 
-            client.close();
-          });
-      });
-    });
+    const tags = await imageTags
+      .find({ name: { $in: fileNamesArray } })
+      .toArray();
+
+    await client.close();
+
+    return tags;
   }
 
-  getFilesWithTags(tagsArray, limit, offset, sortBy = "name") {
-    return this._getMongoClient().then(function(client) {
-      return new Promise(function(resolve, reject) {
-        const db = client.db();
+  async getFilesWithTags(tagsArray, limit, offset, sortBy = "name") {
+    const client = await this._getMongoClient();
 
-        const imageTags = db.collection(config.mongoDbCollection);
+    const db = client.db();
 
-        const tagsRegexes = _(tagsArray)
-          .map(t => new RegExp("^" + t, "i"))
-          .value();
+    const imageTags = db.collection(config.mongoDbCollection);
 
-        const sortByName = sortBy !== "name" ? -1 : 1;
+    const tagsRegexes = _(tagsArray)
+      .map(t => new RegExp("^" + t, "i"))
+      .value();
 
-        imageTags
-          .find({ tags: { $all: tagsRegexes } })
-          .sort({ name: sortByName })
-          .skip(offset)
-          .limit(limit)
-          .toArray(function(err, data) {
-            if (err) {
-              reject(err);
-            } else {
-              imageTags
-                .countDocuments({ tags: { $all: tagsRegexes } })
-                .then(function(total) {
-                  resolve({
-                    items: data,
-                    limit: limit,
-                    offset: offset,
-                    total: total
-                  });
-                })
-                .catch(function(err) {
-                  reject(err);
-                });
-            }
+    const sortByName = sortBy !== "name" ? -1 : 1;
 
-            client.close();
-          });
-      });
+    const items = await imageTags
+      .find({ tags: { $all: tagsRegexes } })
+      .sort({ name: sortByName })
+      .skip(offset)
+      .limit(limit)
+      .toArray();
+
+    const total = await imageTags.countDocuments({
+      tags: { $all: tagsRegexes }
     });
+
+    await client.close();
+
+    return {
+      items: items,
+      limit: limit,
+      offset: offset,
+      total: total
+    };
   }
 
-  getRandomFiles(tagsArray, limit) {
-    return this._getMongoClient().then(function(client) {
-      return new Promise(function(resolve, reject) {
-        const db = client.db();
+  async getRandomFiles(tagsArray, limit) {
+    const client = await this._getMongoClient();
 
-        const imageTags = db.collection(config.mongoDbCollection);
+    const db = client.db();
 
-        const pipelineSteps = [];
+    const imageTags = db.collection(config.mongoDbCollection);
 
-        if (!!tagsArray && tagsArray.length > 0) {
-          const tagsRegexes = _(tagsArray)
-            .map(t => new RegExp("^" + t, "i"))
-            .value();
-          pipelineSteps.push({ $match: { tags: { $all: tagsRegexes } } });
+    const pipelineSteps = [];
+
+    if (!!tagsArray && tagsArray.length > 0) {
+      const tagsRegexes = _(tagsArray)
+        .map(t => new RegExp("^" + t, "i"))
+        .value();
+      pipelineSteps.push({ $match: { tags: { $all: tagsRegexes } } });
+    }
+
+    pipelineSteps.push({ $sample: { size: limit } });
+
+    const items = await imageTags.aggregate(pipelineSteps).toArray();
+
+    await client.close();
+
+    return {
+      items: items,
+      limit: limit,
+      offset: 0,
+      total: limit
+    };
+  }
+
+  async saveTags(name, tags) {
+    const client = await this._getMongoClient();
+
+    const db = client.db();
+
+    const imageTags = db.collection(config.mongoDbCollection);
+
+    await imageTags.updateOne(
+      { name: name },
+      {
+        $set: {
+          name: name,
+          tags: tags
         }
+      },
+      { upsert: true }
+    );
 
-        pipelineSteps.push({ $sample: { size: limit } });
-
-        imageTags.aggregate(pipelineSteps).toArray(function(err, data) {
-          if (err) {
-            reject(err);
-          } else {
-            resolve({
-              items: data,
-              limit: limit,
-              offset: 0,
-              total: limit
-            });
-          }
-
-          client.close();
-        });
-      });
-    });
-  }
-
-  saveTags(name, tags) {
-    return this._getMongoClient().then(function(client) {
-      const db = client.db();
-
-      const imageTags = db.collection(config.mongoDbCollection);
-
-      return imageTags
-        .update(
-          { name: name },
-          {
-            name: name,
-            tags: tags
-          },
-          { upsert: true }
-        )
-        .then(() => {
-          client.close();
-        });
-    });
+    await client.close();
   }
 }
