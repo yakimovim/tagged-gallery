@@ -73,10 +73,10 @@ module.exports = {
       filename: "index.html",
       template: "src/client/index.template.html"
     }),
-    new CopyWebpackPlugin([
-      {
-        from: "src/client/token.html"
-      }
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "src/client/token.html" }
+      ]
+    })
   ]
 };
