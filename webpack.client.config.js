@@ -75,7 +75,14 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: "src/client/token.html" }
+        { from: "src/client/token.html" },
+        { from: "src/client/android-chrome-192x192.png" },
+        { from: "src/client/android-chrome-512x512.png" },
+        { from: "src/client/apple-touch-icon.png" },
+        { from: "src/client/favicon-16x16.png" },
+        { from: "src/client/favicon-32x32.png" },
+        { from: "src/client/favicon.ico" },
+        { from: "src/client/site.webmanifest" },
       ]
     })
   ]
