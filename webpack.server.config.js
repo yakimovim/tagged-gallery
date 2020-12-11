@@ -1,5 +1,4 @@
 var path = require('path');
-var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 module.exports = {
     target: 'node',
@@ -21,9 +20,5 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new HardSourceWebpackPlugin({
-            cacheDirectory: 'node_modules/.cache/hard-source/server/[confighash]'
-        })
-    ]
+    plugins: []
 };

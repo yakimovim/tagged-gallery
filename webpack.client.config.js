@@ -1,7 +1,6 @@
 const webpack = require("webpack");
 const path = require("path");
-const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -17,13 +16,8 @@ module.exports = {
     publicPath: "/"
   },
   optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true
-      })
-    ]
+    minimize: true,
+    minimizer: [new TerserPlugin()]
   },
   resolve: {
     alias: {
@@ -40,17 +34,36 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" }
+        ]
       },
       {
         test: /\.woff$/,
-        loader:
-          "url-loader?limit=10000&mimetype=application/font-woff&name=[path][name].[ext]"
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10000,
+              mimetype: "application/font-woff",
+              name: "[path][name].[ext]"
+            }
+          }
+        ]
       },
       {
         test: /\.woff2$/,
-        loader:
-          "url-loader?limit=10000&mimetype=application/font-woff2&name=[path][name].[ext]"
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10000,
+              mimetype: "application/font-woff2",
+              name: "[path][name].[ext]"
+            }
+          }
+        ]
       },
       {
         test: /\.(eot|ttf|svg|gif|png)$/,
@@ -60,9 +73,6 @@ module.exports = {
   },
   plugins: [
     // new BundleAnalyzerPlugin(),
-    new HardSourceWebpackPlugin({
-      cacheDirectory: "node_modules/.cache/hard-source/client/[confighash]"
-    }),
     new webpack.DefinePlugin({
       // <-- key to reducing React's size
       "process.env": {
