@@ -54,6 +54,7 @@
     "react-router-dom": "^5.2.0",
     "react-tagsinput": "^3.19.0",
     "redux": "^4.1.0",
+    "saslprep": "^1.0.3",
     "whatwg-fetch": "^3.6.2"
   }
 }

@@ -20,5 +20,8 @@ module.exports = {
             }
         ]
     },
-    plugins: []
+    plugins: [],
+    externals: {
+        "saslprep": "require('saslprep')"
+    }
 };
