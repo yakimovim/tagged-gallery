@@ -2,7 +2,7 @@
   "name": "tagged_gallery",
   "version": "1.0.0",
   "engines": {
-    "node": "12.6.0"
+    "node": "16.1.0"
   },
   "description": "Gallery of images which allow assigning multiple tags to an image",
   "main": "index.js",
@@ -21,39 +21,39 @@
   "author": "Ivan Iakimov",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.10",
-    "@babel/preset-react": "^7.12.10",
+    "@babel/core": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-react": "^7.13.13",
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^7.0.0",
-    "css-loader": "^5.0.1",
+    "css-loader": "^5.2.4",
     "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^4.5.0",
-    "nodemon": "^2.0.6",
+    "html-webpack-plugin": "^4.5.2",
+    "nodemon": "^2.0.7",
     "npm-run-all": "^4.1.5",
     "style-loader": "^2.0.0",
-    "terser-webpack-plugin": "^5.0.3",
+    "terser-webpack-plugin": "^5.1.2",
     "url-loader": "^4.1.1",
-    "webpack": "^5.10.0",
-    "webpack-bundle-analyzer": "^4.2.0",
-    "webpack-cli": "^4.2.0"
+    "webpack": "^5.37.0",
+    "webpack-bundle-analyzer": "^4.4.1",
+    "webpack-cli": "^4.7.0"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
-    "dotenv": "^8.2.0",
+    "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "lodash": "^4.17.21",
     "mongodb": "^3.6.3",
     "node-fetch": "^2.6.1",
-    "preact": "^10.5.7",
+    "preact": "^10.5.13",
     "prop-types": "^15.7.2",
-    "react-redux": "^7.2.2",
+    "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-tagsinput": "^3.19.0",
-    "redux": "^4.0.5",
-    "whatwg-fetch": "^3.5.0"
+    "redux": "^4.1.0",
+    "whatwg-fetch": "^3.6.2"
   }
 }
