@@ -22,6 +22,7 @@ module.exports = {
     },
     plugins: [],
     externals: {
-        "saslprep": "require('saslprep')"
+        "saslprep": "require('saslprep')",
+        "mongodb-client-encryption": "undefined"
     }
 };
