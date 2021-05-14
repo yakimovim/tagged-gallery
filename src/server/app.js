@@ -2,7 +2,6 @@ import path from 'path';
 import express from 'express';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
 import YandexDiskApi from './yandexDiskApi';
 import TaggedGalleryApi from './api';
 
@@ -10,7 +9,7 @@ import config from '../config/configuration';
 
 const app = express();
 app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(express.json());
 
 const clientPath = path.resolve(process.cwd(), './dist/client');
 
