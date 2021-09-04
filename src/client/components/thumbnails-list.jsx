@@ -2,23 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import Thumbnail from "./thumbnail.jsx";
 
-export default class ThumbnailsList extends React.PureComponent {
-  render() {
-    return (
-      <div className="thumbnails-grid">
-        {this.props.thumbnails.map(thumbnail => {
-          return (
-            <Thumbnail
-              key={thumbnail.name}
-              name={thumbnail.name}
-              preview={thumbnail.preview}
-              tags={thumbnail.tags}
-            />
-          );
-        })}
-      </div>
-    );
-  }
+const ThumbnailsList = ({ thumbnails }) => {
+  return (<div className="thumbnails-grid">
+    {thumbnails.map(thumbnail => {
+      return (
+        <Thumbnail
+          key={thumbnail.name}
+          name={thumbnail.name}
+          preview={thumbnail.preview}
+          tags={thumbnail.tags}
+        />
+      );
+    })}
+  </div>);
 }
 
 ThumbnailsList.propTypes = {
@@ -30,3 +26,5 @@ ThumbnailsList.propTypes = {
     }).isRequired
   ).isRequired
 };
+
+export default ThumbnailsList;

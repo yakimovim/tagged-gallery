@@ -4,13 +4,11 @@ import { connect } from 'react-redux'
 import LoadingIndicator from './loading-indicator.jsx'
 import ThumbnailsList from './thumbnails-list.jsx'
 
-export class ThumbnailsView extends React.Component {
-    render() {
-        return <div>
-            <LoadingIndicator loading={this.props.loading} />
-            <ThumbnailsList thumbnails={this.props.thumbnails} />
-        </div>
-    }
+export const ThumbnailsView = ({ loading, thumbnails }) => {
+    return (<div>
+            <LoadingIndicator loading={loading} />
+            <ThumbnailsList thumbnails={thumbnails} />
+        </div>);
 }
 
 ThumbnailsView.propTypes = {

@@ -44,6 +44,8 @@ header {
   border-radius: 0.5em;
   padding: 1em;
   align-items: baseline;
+  position: sticky;
+  top: 0;
 }
 
 header > * + * {

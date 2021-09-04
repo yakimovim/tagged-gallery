@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { changeSorting } from "../actions.js";
 
 export class Instruments extends React.Component {
-  handleSortingChange(evnt) {
-    this.props.onSortChanged(evnt.target.value);
+  handleSortingChange(event) {
+    this.props.onSortChanged(event.target.value);
   }
 
   render() {

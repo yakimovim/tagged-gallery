@@ -3,31 +3,27 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getNextPage, getPrevPage } from "../actions.js";
 
-export class Paginator extends React.Component {
-  render() {
-    if (this.props.randomMode) {
-      return null;
-    }
+export const Paginator = ({ randomMode, onGetPrevPage, onGetNextPage }) => {
+  if(randomMode) return null;
 
-    return (
-      <div className="flex">
-        <a
-          className="page-link prev-page"
-          href="#"
-          onClick={this.props.onGetPrevPage.bind(this)}
-        >
-          &larr; Previous
-        </a>
-        <a
-          className="page-link next-page"
-          href="#"
-          onClick={this.props.onGetNextPage.bind(this)}
-        >
-          Next &rarr;
-        </a>
-      </div>
-    );
-  }
+  return (
+    <div className="flex">
+      <a
+        className="page-link prev-page"
+        href="#"
+        onClick={onGetPrevPage}
+      >
+        &larr; Previous
+      </a>
+      <a
+        className="page-link next-page"
+        href="#"
+        onClick={onGetNextPage}
+      >
+        Next &rarr;
+      </a>
+    </div>
+  );
 }
 
 Paginator.propTypes = {

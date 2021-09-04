@@ -1,44 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import TagsInput from "react-tagsinput";
 import { saveTags } from "../data.js";
 import { getFullImage } from "../actions.js";
 
-export class Thumbnail extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tags: this.props.tags
-    };
+export const Thumbnail = ({name, tags, preview, onGetFullImage, onSaveTags}) => {
+  const [savedTags, setSavedTags] =  useState(tags);
+
+  const handleImageClick = () => {
+    onGetFullImage(name);
   }
 
-  handleShowFullImage() {
-    this.props.onGetFullImage(this.props.name);
+  const handleTagsChange = (newTags) => {
+    onSaveTags(name, newTags);
+    setSavedTags(newTags);
   }
 
-  handleTagsChange(tags) {
-    this.props.onSaveTags(this.props.name, tags);
-    this.setState({ tags: tags });
-  }
-
-  render() {
-    return (
-      <div className="imageDiv">
-        <div className="imgWrapper">
-          <img
-            className="img-thumbnail"
-            src={this.props.preview}
-            onClick={this.handleShowFullImage.bind(this)}
-          />
-        </div>
-        <TagsInput
-          value={this.state.tags}
-          onChange={this.handleTagsChange.bind(this)}
+  return (
+    <div className="imageDiv">
+      <div className="imgWrapper">
+        <img
+          className="img-thumbnail"
+          src={preview}
+          onClick={handleImageClick}
         />
       </div>
-    );
-  }
+      <TagsInput
+        value={savedTags}
+        onChange={handleTagsChange}
+      />
+    </div>
+  );
 }
 
 Thumbnail.propTypes = {

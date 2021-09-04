@@ -1,50 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { search } from "../actions.js";
 
-export class Searcher extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { searchText: props.searchText };
+export const Searcher = ({searchText, onSearch}) => {
+  const [savedSearchText, setSavedSearchText] = useState(searchText);
+
+  const handleSearchTextChange = (event) => {
+    setSavedSearchText(event.target.value);
   }
 
-  handleSearchTextChange(evnt) {
-    this.setState({ searchText: evnt.target.value });
+  const handleSearchClick = () => {
+    onSearch(savedSearchText);
   }
 
-  handleSeachClick() {
-    this.props.onSearch(this.state.searchText);
-  }
-
-  handleKeyPress(evnt) {
-    if (evnt.key === "Enter") {
-      evnt.preventDefault();
-      this.props.onSearch(this.state.searchText);
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      onSearch(savedSearchText);
     }
   }
 
-  render() {
-    return (
-      <div className="flex search-row">
-        <div className="search-field">
-          <input
-            type="text"
-            className="search-input"
-            value={this.state.searchText}
-            onChange={this.handleSearchTextChange.bind(this)}
-            onKeyPress={this.handleKeyPress.bind(this)}
-          />
-          <input
-            type="button"
-            value="Search"
-            className="search-button"
-            onClick={this.handleSeachClick.bind(this)}
-          />
-        </div>
+  return (
+    <div className="flex search-row">
+      <div className="search-field">
+        <input
+          type="text"
+          className="search-input"
+          value={savedSearchText}
+          onChange={handleSearchTextChange}
+          onKeyPress={handleKeyPress}
+        />
+        <input
+          type="button"
+          value="Search"
+          className="search-button"
+          onClick={handleSearchClick}
+        />
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 Searcher.propTypes = {

@@ -3,37 +3,29 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ActionTypes from "../actionTypes.js";
 
-export class FullImageDialog extends React.Component {
-  handleCloseDialog() {
-    this.props.onCloseDialog();
-  }
+export const FullImageDialog = ({href, onCloseDialog}) => {
+  if(!href) return null;
 
-  render() {
-    if (!this.props.href) {
-      return null;
-    }
-
-    return (
-      <div>
-        <div class="full-screen-dialog-backdrop" />
-        <div class="full-screen-dialog">
-          <div class="dialog-header">
-            <div
-              class="close-button"
-              onClick={this.handleCloseDialog.bind(this)}
-            >
-              Close
-            </div>
+  return (
+    <div>
+      <div class="full-screen-dialog-backdrop" />
+      <div class="full-screen-dialog">
+        <div class="dialog-header">
+          <div
+            class="close-button"
+            onClick={onCloseDialog}
+          >
+            Close
           </div>
-          <div class="dialog-body">
-            <div class="full-image-container">
-              <img className="full-image" src={this.props.href} />
-            </div>
+        </div>
+        <div class="dialog-body">
+          <div class="full-image-container">
+            <img className="full-image" src={href} />
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 FullImageDialog.propTypes = {
