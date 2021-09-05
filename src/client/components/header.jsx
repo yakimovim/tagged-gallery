@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   findFirstPageWithUntaggedImage,
   getRandomThumbnails
@@ -28,6 +29,7 @@ export const Header = ({onFindFirstPageWithUntaggedImage, onFindRandomImages}) =
       >
         Random images
       </a>
+      <Link className="header-link" to="/slideshow">Show slides</Link>
     </header>
   );
 }
@@ -48,6 +50,9 @@ const mapDispatchToProps = dispatch => {
     },
     onFindRandomImages: function() {
       getRandomThumbnails();
+    },
+    onShowSlides: function() {
+      showSlide();
     }
   };
 };

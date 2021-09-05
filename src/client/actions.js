@@ -153,3 +153,18 @@ export function findFirstPageWithUntaggedImage() {
             store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.FAILURE });
         });
 }
+
+export function showSlide() {
+    store.dispatch({ type: ActionTypes.GET_SLIDE_IMAGE.GETTINGS });
+    const state = store.getState();
+    Data.getSlideImage(state.searchText)
+        .then(function (data) {
+            store.dispatch({
+                type: ActionTypes.GET_SLIDE_IMAGE.SUCCESS,
+                href: data.href
+            });
+        })
+        .catch(function () {
+            store.dispatch({ type: ActionTypes.GET_SLIDE_IMAGE.FAILURE });
+        });
+}

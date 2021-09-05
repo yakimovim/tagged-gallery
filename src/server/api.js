@@ -104,4 +104,16 @@ export default class TaggedGalleryApi {
             await this._mongoApi.saveTags(name, tagsArray);
         }
     }
+
+    async getSlideImage(search) {
+        let tagsArray = [];
+        if(!!search) {
+            tagsArray = _((search || '').split(',')).map(t => t.trim()).filter(t => !!t).value();
+        }
+        const tagsData = await this._mongoApi.getRandomFiles(tagsArray, 1);
+
+        const api = new YandexDiskApi(this._oAuthToken);
+        const imageData = await api.getFullImage(tagsData.items[0].name);
+        return imageData;
+    }
 }

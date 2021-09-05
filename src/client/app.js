@@ -11,6 +11,7 @@ import { getClientId } from "./data.js";
 
 import store from "./store.js";
 import Application from "./components/application.jsx";
+import SlideShow from "./components/slideshow.jsx";
 
 var token = getCookie("access_token");
 if (!token) {
@@ -24,6 +25,7 @@ if (!token) {
     <Provider store={store}>
       <Router history={history}>
         <Switch>
+          <Route exact path="/slideshow" component={SlideShow} />
           <Route exact path="/:searchText/:pageId" component={Application} />
           <Route exact path="/:pageId" component={Application} />
           <Route exact path="/" component={Application} />

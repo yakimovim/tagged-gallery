@@ -61,6 +61,14 @@ app.post('/api/saveTags', function (req, res) {
         });
 });
 
+app.get('/api/slide', function (req, res) {
+    const api = new TaggedGalleryApi(req.cookies.access_token);
+    api.getSlideImage(req.query.search)
+        .then(function (data) {
+            res.json(data);
+        });
+});
+
 app.get('*', function (req, res) {
     res.sendFile(clientPath + '/index.html');
 });

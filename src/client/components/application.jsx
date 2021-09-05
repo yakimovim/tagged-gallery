@@ -25,12 +25,12 @@ export class Application extends React.Component {
     }
 
     render() {
-        return <div className="container">
+        return (<div className="container">
             <FullImageDialog />
             <Header />
             <Searcher />
             <ImageTable />
-        </div>
+        </div>);
     }
 }
 

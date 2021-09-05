@@ -9,6 +9,7 @@ const initialState = {
   total: 0,
   thumbnails: [],
   fullImage: "",
+  slideImage: "",
   loading: false,
   randomMode: false
 };

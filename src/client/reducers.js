@@ -67,6 +67,20 @@ const reducer = (state, action) => {
             });
             return newState;
         }
+        case ActionTypes.GET_SLIDE_IMAGE.SUCCESS:
+        {
+            const newState = Object.assign({}, state, {
+                slideImage: action.href
+            });
+            return newState;
+        }
+        case ActionTypes.REMOVE_SLIDE_IMAGE:
+        {
+            const newState = Object.assign({}, state, {
+                slideImage: ''
+            });
+            return newState;
+        }
         default:
             return state;
     }

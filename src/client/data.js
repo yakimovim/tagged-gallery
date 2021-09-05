@@ -51,7 +51,8 @@ export function getThumbnailsDataWithUntagged(limit, offset, sortBy = 'name') {
 export function getFullImage(name) {
     return fetch(`/api/image?fileName=${encodeURI(name)}`, { credentials: 'same-origin' }).then(function (response) {
         return response.json()
-    });}
+    });
+}
 
 export function getClientId() {
     return fetch('/api/clientId', { credentials: 'same-origin' }).then(function (response) {
@@ -71,5 +72,15 @@ export function saveTags(name, tags) {
             "name": name,
             "tags": tags
         })
+    });
+}
+
+export function getSlideImage(search) {
+    return fetch(`/api/slide?search=${encodeURI(search || '')}`, { credentials: 'same-origin' })
+    .then(function (response) {
+        return response.json();
+    })
+    .catch(function () {
+        console.error("Can't get image for slide");
     });
 }
