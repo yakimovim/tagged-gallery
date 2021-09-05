@@ -31,7 +31,7 @@ export const SlideShow = ({slideImage, getSlide}) => {
         }
     });
 
-    return (<div className="container slideshowContainer">
+    return (<div className="container">
         <Header />
         <Searcher />
         {
