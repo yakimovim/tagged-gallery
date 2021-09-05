@@ -302,3 +302,8 @@ header a:hover {
   background-image: url("./loading.gif");
   margin: 0 auto;
 }
+
+.slideshowContainer {
+  height: 100vh;
+  overflow-y: hidden;
+}

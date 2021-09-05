@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import Header from './header.jsx'
+import Searcher from './searcher.jsx';
 import LoadingIndicator from './loading-indicator.jsx'
 import {
     showSlide
   } from "../actions.js";
 
+
 export const SlideShow = ({slideImage, getSlide}) => {
+
+    const timerRef = useRef(null);
 
     useEffect(() => {
         if(!slideImage)
@@ -15,18 +19,27 @@ export const SlideShow = ({slideImage, getSlide}) => {
         }
         else
         {
-            setTimeout(() => {
+            if(!!timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+
+            const timerId = setTimeout(() => {
                 getSlide();
             }, 10000);
+
+            timerRef.current = timerId;
         }
     });
 
-    return (<div className="container">
+    return (<div className="container slideshowContainer">
         <Header />
+        <Searcher />
         {
             !slideImage
                 ? <LoadingIndicator loading={true} />
-                : <img className="full-image" src={slideImage} />
+                : (<div className="imageDiv">
+                    <img className="full-image" src={slideImage} />
+                </div>)
         }
     </div>);
 }

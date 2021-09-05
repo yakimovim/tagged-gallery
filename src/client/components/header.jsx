@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom"
 import { Link } from "react-router-dom";
 import {
   findFirstPageWithUntaggedImage,
@@ -8,11 +9,19 @@ import {
 } from "../actions.js";
 
 export const Header = ({onFindFirstPageWithUntaggedImage, onFindRandomImages}) => {
+
+  const history = useHistory();
+
+  const findRandomImages = () => {
+    history.push("/random");
+    onFindRandomImages();
+  }
+
   return (
     <header className="flex">
-      <a className="brand" href="/">
+      <Link className="brand" to="/">
         Tagged Gallery
-      </a>
+      </Link>
       <a
         className="header-link"
         id="untaggedButton"
@@ -25,7 +34,7 @@ export const Header = ({onFindFirstPageWithUntaggedImage, onFindRandomImages}) =
         className="header-link"
         id="randomButton"
         href="#"
-        onClick={onFindRandomImages}
+        onClick={findRandomImages}
       >
         Random images
       </a>
