@@ -299,7 +299,7 @@ header a:hover {
 #loadingImg {
   width: 200px;
   height: 200px;
-  background-image: url("./loading.gif");
+  background-image: url("loading.gif");
   margin: 0 auto;
 }
 
