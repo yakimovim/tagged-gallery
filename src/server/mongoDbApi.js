@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-import _ from "lodash";
+import _, { find } from "lodash";
 
 import config from "../config/configuration";
 
@@ -27,6 +27,41 @@ export default class MongoDbApi {
     return tags;
   }
 
+  getTagsSearchMongoObject(tagsArray)
+  {
+    if (!tagsArray || tagsArray.length == 0) {
+      return  null;
+    }
+
+    const positiveTags = _(tagsArray)
+      .filter(t => t[0] !== "-")
+      .toArray();
+    const negativeTags = _(tagsArray)
+      .filter(t => t[0] === "-")
+      .map(t => t.substring(1))
+      .toArray();
+
+    const positiveRegularExpressions = positiveTags
+      .map(t => new RegExp("^" + t, "i"))
+      .value();
+    const negativeRegularExpressions = negativeTags
+      .map(t => new RegExp("^" + t, "i"))
+      .value();
+
+    const positiveObject = positiveRegularExpressions.length == 0
+      ? null
+      : { tags: { $all: positiveRegularExpressions } };
+    const negativeObject = negativeRegularExpressions.length == 0
+      ? null
+      : { tags: { $not: {$elemMatch: { $in: negativeRegularExpressions } } } };
+
+    if(positiveObject === null) return negativeObject;
+    if(negativeObject === null) return positiveObject;
+
+    return { $and: [ positiveObject, negativeObject ] };
+
+  }
+
   async getFilesWithTags(tagsArray, limit, offset, sortBy = "name") {
     const client = await this._getMongoClient();
 
@@ -34,22 +69,18 @@ export default class MongoDbApi {
 
     const imageTags = db.collection(config.mongoDbCollection);
 
-    const tagsRegexes = _(tagsArray)
-      .map(t => new RegExp("^" + t, "i"))
-      .value();
+    const findObject = this.getTagsSearchMongoObject(tagsArray);
 
     const sortByName = sortBy !== "name" ? -1 : 1;
 
     const items = await imageTags
-      .find({ tags: { $all: tagsRegexes } })
+      .find(findObject)
       .sort({ name: sortByName })
       .skip(offset)
       .limit(limit)
       .toArray();
 
-    const total = await imageTags.countDocuments({
-      tags: { $all: tagsRegexes }
-    });
+    const total = await imageTags.countDocuments(findObject);
 
     await client.close();
 
@@ -70,11 +101,10 @@ export default class MongoDbApi {
 
     const pipelineSteps = [];
 
-    if (!!tagsArray && tagsArray.length > 0) {
-      const tagsRegexes = _(tagsArray)
-        .map(t => new RegExp("^" + t, "i"))
-        .value();
-      pipelineSteps.push({ $match: { tags: { $all: tagsRegexes } } });
+    const findObject = this.getTagsSearchMongoObject(tagsArray);
+
+    if (findObject !== null) {
+      pipelineSteps.push({ $match: findObject });
     }
 
     pipelineSteps.push({ $sample: { size: limit } });
