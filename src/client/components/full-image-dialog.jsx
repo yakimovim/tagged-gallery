@@ -1,10 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ActionTypes from "../actionTypes.js";
 
-export const FullImageDialog = ({href, onCloseDialog}) => {
+const FullImageDialog = () => {
+  const href = useSelector((state) => state.fullImage);
+
+  const dispatch = useDispatch();
+
   if(!href) return null;
+
+  const onCloseDialog = () => {
+    dispatch({
+      type: ActionTypes.REMOVE_FULL_IMAGE
+    });
+  }
 
   return (
     <div>
@@ -28,28 +37,4 @@ export const FullImageDialog = ({href, onCloseDialog}) => {
   );
 }
 
-FullImageDialog.propTypes = {
-  href: PropTypes.string.isRequired,
-  onCloseDialog: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => {
-  return {
-    href: state.fullImage
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onCloseDialog: function() {
-      dispatch({
-        type: ActionTypes.REMOVE_FULL_IMAGE
-      });
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FullImageDialog);
+export default FullImageDialog;

@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import TagsInput from "react-tagsinput";
 import { saveTags } from "../data.js";
 import { getFullImage } from "../actions.js";
 
-export const Thumbnail = ({name, tags, preview, onGetFullImage, onSaveTags}) => {
+export const Thumbnail = ({name, tags, preview}) => {
   const [savedTags, setSavedTags] =  useState(tags);
 
   const handleImageClick = () => {
-    onGetFullImage(name);
+    getFullImage(name);
   }
 
   const handleTagsChange = (newTags) => {
-    onSaveTags(name, newTags);
+    saveTags(name, newTags.join(","));
     setSavedTags(newTags);
   }
 
@@ -38,26 +37,6 @@ Thumbnail.propTypes = {
   name: PropTypes.string.isRequired,
   preview: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onGetFullImage: PropTypes.func.isRequired,
-  onSaveTags: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => {
-  return {};
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onGetFullImage: function(name) {
-      getFullImage(name);
-    },
-    onSaveTags: function(name, tags) {
-      saveTags(name, tags.join(","));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Thumbnail);
+export default Thumbnail;

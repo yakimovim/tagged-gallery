@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { connect } from "react-redux";
 import Header from "./header.jsx";
 import Searcher from "./searcher.jsx";
 import LoadingIndicator from "./loading-indicator.jsx";
 import { showSlide } from "../actions.js";
+import { useSelector } from "react-redux";
 
-export const SlideShow = ({ slideImage, getSlide }) => {
+export const SlideShow = () => {
   const timerRef = useRef(null);
 
   const disableTimer = () => {
@@ -18,6 +18,12 @@ export const SlideShow = ({ slideImage, getSlide }) => {
   const [slidesInterval, setSlidesInterval] = useState(10000);
 
   const [isPaused, setIsPaused] = useState(false);
+
+  const slideImage = useSelector((state) => state.slideImage);
+
+  const getSlide = () => {
+    showSlide();
+  };
 
   useEffect(() => {
     if (!slideImage) {
@@ -97,18 +103,4 @@ export const SlideShow = ({ slideImage, getSlide }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    slideImage: state.slideImage,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getSlide: function () {
-      showSlide();
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SlideShow);
+export default SlideShow;

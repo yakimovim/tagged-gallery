@@ -1,10 +1,17 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { search } from "../actions.js";
 
-export const Searcher = ({searchText, onSearch}) => {
+
+const Searcher = () => {
+  const searchText = useSelector((state) => state.searchText);
   const [savedSearchText, setSavedSearchText] = useState(searchText);
+  const history = useHistory();
+
+  const onSearch = (textToSearch) => {
+    search(textToSearch, history);
+  }
 
   const handleSearchTextChange = (event) => {
     setSavedSearchText(event.target.value);
@@ -42,26 +49,4 @@ export const Searcher = ({searchText, onSearch}) => {
   );
 }
 
-Searcher.propTypes = {
-  searchText: PropTypes.string.isRequired,
-  onSearch: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => {
-  return {
-    searchText: state.searchText
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onSearch: function(searchText) {
-      search(searchText);
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Searcher);
+export default Searcher;

@@ -4,7 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
-import history from "./history.js";
+import history from "./history";
 
 import { getCookie } from "./cookie.js";
 import { getClientId } from "./data.js";

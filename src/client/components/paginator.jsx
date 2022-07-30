@@ -1,24 +1,38 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getNextPage, getPrevPage } from "../actions.js";
 
-export const Paginator = ({ randomMode, onGetPrevPage, onGetNextPage }) => {
+
+const Paginator = () => {
+
+  const randomMode = useSelector((state) => state.randomMode);
+
   if(randomMode) return null;
+
+  const history = useHistory();
+
+  const goNext = () => {
+    getNextPage(history);
+  }
+
+  const goPrev = () => {
+    getPrevPage(history);
+  }
 
   return (
     <div className="flex">
       <a
         className="page-link prev-page"
         href="#"
-        onClick={onGetPrevPage}
+        onClick={goPrev}
       >
         &larr; Previous
       </a>
       <a
         className="page-link next-page"
         href="#"
-        onClick={onGetNextPage}
+        onClick={goNext}
       >
         Next &rarr;
       </a>
@@ -26,30 +40,4 @@ export const Paginator = ({ randomMode, onGetPrevPage, onGetNextPage }) => {
   );
 }
 
-Paginator.propTypes = {
-  randomMode: PropTypes.bool.isRequired,
-  onGetNextPage: PropTypes.func.isRequired,
-  onGetPrevPage: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => {
-  return {
-    randomMode: state.randomMode
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onGetNextPage: function() {
-      getNextPage();
-    },
-    onGetPrevPage: function() {
-      getPrevPage();
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Paginator);
+export default Paginator;

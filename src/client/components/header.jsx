@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { useHistory } from "react-router-dom"
 import { Link } from "react-router-dom";
 import {
@@ -8,13 +6,16 @@ import {
   getRandomThumbnails
 } from "../actions.js";
 
-export const Header = ({onFindFirstPageWithUntaggedImage, onFindRandomImages}) => {
+const Header = () => {
 
   const history = useHistory();
 
-  const findRandomImages = () => {
-    history.push("/random");
-    onFindRandomImages();
+  const onFindFirstPageWithUntaggedImage = () => {
+    findFirstPageWithUntaggedImage(history);
+  }
+
+  const onFindRandomImages = () => {
+    getRandomThumbnails(history);
   }
 
   return (
@@ -34,7 +35,7 @@ export const Header = ({onFindFirstPageWithUntaggedImage, onFindRandomImages}) =
         className="header-link"
         id="randomButton"
         href="#"
-        onClick={findRandomImages}
+        onClick={onFindRandomImages}
       >
         Random images
       </a>
@@ -43,30 +44,4 @@ export const Header = ({onFindFirstPageWithUntaggedImage, onFindRandomImages}) =
   );
 }
 
-Header.propTypes = {
-  onFindFirstPageWithUntaggedImage: PropTypes.func.isRequired,
-  onFindRandomImages: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => {
-  return {};
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onFindFirstPageWithUntaggedImage: function() {
-      findFirstPageWithUntaggedImage();
-    },
-    onFindRandomImages: function() {
-      getRandomThumbnails();
-    },
-    onShowSlides: function() {
-      showSlide();
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default Header;

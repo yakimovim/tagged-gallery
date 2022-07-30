@@ -1,89 +1,47 @@
+import { createReducer } from '@reduxjs/toolkit'
 import ActionTypes from './actionTypes.js'
+import { initialState } from './initial-state.js';
 
-const reducer = (state, action) => {
-    switch(action.type) {
-        case ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS:
-        {
-            const newState = Object.assign({}, state, {
-                loading: true
-            });
-            return newState;
-        }
-        case ActionTypes.GET_THUMBNAILS_PAGE.FAILURE:
-        {
-            const newState = Object.assign({}, state, {
-                loading: false
-            });
-            return newState;
-        }
-        case ActionTypes.GET_THUMBNAILS_PAGE.SUCCESS:
-        {
-            const newState = Object.assign({}, state, {
-                pageIndex: action.pageIndex,
-                total: action.total,
-                thumbnails: action.thumbnails,
-                loading: false
-            });
-            return newState;
-        }
-        case ActionTypes.SET_SEARCH_TEXT:
-        {
+const reducer = createReducer(initialState, (builder) => {
+    builder
+        .addCase(ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS, (state, action) => {
+            state.loading = true;
+        })
+        .addCase(ActionTypes.GET_THUMBNAILS_PAGE.FAILURE, (state, action) => {
+            state.loading = false;
+        })
+        .addCase(ActionTypes.GET_THUMBNAILS_PAGE.SUCCESS, (state, action) => {
+            state.pageIndex = action.pageIndex;
+            state.total = action.total;
+            state.thumbnails = action.thumbnails;
+            state.loading = false;
+        })
+        .addCase(ActionTypes.SET_SEARCH_TEXT, (state, action) => {
             let sortBy = state.sortBy;
             if(!!action.searchText && !sortBy.endsWith("name")) {
                 sortBy = "name";
             }
-
-            const newState = Object.assign({}, state, {
-                searchText: action.searchText,
-                sortBy: sortBy
-            });
-            return newState;
-        }
-        case ActionTypes.SET_SORT_BY:
-        {
-            const newState = Object.assign({}, state, {
-                sortBy: action.sortBy
-            });
-            return newState;
-        }
-        case ActionTypes.GET_FULL_IMAGE.SUCCESS:
-        {
-            const newState = Object.assign({}, state, {
-                fullImage: action.href
-            });
-            return newState;
-        }
-        case ActionTypes.REMOVE_FULL_IMAGE:
-        {
-            const newState = Object.assign({}, state, {
-                fullImage: ''
-            });
-            return newState;
-        }
-        case ActionTypes.SET_RANDOM_MODE:
-        {
-            const newState = Object.assign({}, state, {
-                randomMode: action.randomMode
-            });
-            return newState;
-        }
-        case ActionTypes.GET_SLIDE_IMAGE.SUCCESS:
-        {
-            const newState = Object.assign({}, state, {
-                slideImage: action.href
-            });
-            return newState;
-        }
-        case ActionTypes.REMOVE_SLIDE_IMAGE:
-        {
-            const newState = Object.assign({}, state, {
-                slideImage: ''
-            });
-            return newState;
-        }
-        default:
-            return state;
-    }
-};
+            state.searchText = action.searchText;
+            state.sortBy = sortBy;
+        })
+        .addCase(ActionTypes.SET_SORT_BY, (state, action) => {
+            state.sortBy = action.sortBy;
+        })
+        .addCase(ActionTypes.GET_FULL_IMAGE.SUCCESS, (state, action) => {
+            state.fullImage = action.href;
+        })
+        .addCase(ActionTypes.REMOVE_FULL_IMAGE, (state, action) => {
+            state.fullImage = '';
+        })
+        .addCase(ActionTypes.SET_RANDOM_MODE, (state, action) => {
+            state.randomMode = action.randomMode;
+        })
+        .addCase(ActionTypes.GET_SLIDE_IMAGE.SUCCESS, (state, action) => {
+            state.slideImage = action.href;
+        })
+        .addCase(ActionTypes.REMOVE_SLIDE_IMAGE, (state, action) => {
+            state.slideImage = '';
+        });
+});
 
 export default reducer;
