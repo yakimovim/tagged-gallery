@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-//import TagsInput from "react-tagsinput";
 import TagsInput from "./tags-input.jsx";
 import { saveTags } from "../data.js";
 import { getFullImage } from "../actions.js";

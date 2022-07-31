@@ -181,16 +181,6 @@ header a:hover {
 
 }
 
-.react-tagsinput {
-  width: 100%;
-  margin-top: 0.5em;
-  border-radius: 0.2em;
-}
-
-.react-tagsinput-tag {
-  background-color: var(--back-color);
-}
-
 .tags-container {
   display: flex;
   width: 100%;
