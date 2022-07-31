@@ -21,7 +21,7 @@ const Searcher = () => {
     onSearch(savedSearchText);
   }
 
-  const handleKeyPress = (event) => {
+  const handleKeyUp = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
       onSearch(savedSearchText);
@@ -36,7 +36,7 @@ const Searcher = () => {
           className="search-input"
           value={savedSearchText}
           onChange={handleSearchTextChange}
-          onKeyPress={handleKeyPress}
+          onKeyUp={handleKeyUp}
         />
         <input
           type="button"

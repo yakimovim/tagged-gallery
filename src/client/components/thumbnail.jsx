@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import TagsInput from "react-tagsinput";
+//import TagsInput from "react-tagsinput";
+import TagsInput from "./tags-input.jsx";
 import { saveTags } from "../data.js";
 import { getFullImage } from "../actions.js";
 
-export const Thumbnail = ({name, tags, preview}) => {
+const Thumbnail = ({name, tags, preview}) => {
   const [savedTags, setSavedTags] =  useState(tags);
 
   const handleImageClick = () => {
@@ -26,7 +27,7 @@ export const Thumbnail = ({name, tags, preview}) => {
         />
       </div>
       <TagsInput
-        value={savedTags}
+        tags={savedTags}
         onChange={handleTagsChange}
       />
     </div>

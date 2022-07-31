@@ -191,6 +191,47 @@ header a:hover {
   background-color: var(--back-color);
 }
 
+.tags-container {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  color: black;
+  align-items: stretch;
+  height: 3em;
+}
+
+.tags-container .tag-input {
+  width: 100%;
+  border: none;
+  border-radius: 0.2em;
+  margin: 0.5em 0;
+  padding-left: 0.5em;
+}
+
+.tags-container .tag-pill {
+  display: flex;
+  align-items: baseline;
+  margin: 7px 0;
+  margin-right: 0.5em;
+  padding: 0 0.1em 0 0.5em;
+  border: 1px solid lightgray;
+  border-radius: 0.2em;
+  background-color: lightgray;
+  white-space: nowrap;
+  color: black;
+}
+
+.tags-container .tag-pill .tag-remove-button {
+  display: flex;
+  padding: 0.5em;
+  padding-bottom: 0.35em;
+  font-weight: 800;
+  border: none;
+  background-color: unset;
+  cursor: pointer;
+  color: black;
+}
+
 .full-screen-dialog-backdrop {
   position: fixed;
   top: 0;
