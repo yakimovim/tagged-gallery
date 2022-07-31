@@ -2,9 +2,8 @@ import "./css.js";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
-import history from "./history";
 
 import { getCookie } from "./cookie.js";
 import { getClientId } from "./data.js";
@@ -23,15 +22,15 @@ if (!token) {
 } else {
   ReactDOM.render(
     <Provider store={store}>
-      <Router history={history}>
-        <Switch>
-          <Route exact path="/slideshow" component={SlideShow} />
-          <Route exact path="/:searchText/:pageId" component={Application} />
-          <Route exact path="/:pageId" component={Application} />
-          <Route exact path="/" component={Application} />
-          <Route component={Application} />
-        </Switch>
-      </Router>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/slideshow" element={<SlideShow/>} />
+          <Route exact path="/:searchText/:pageId" element={<Application/>} />
+          <Route exact path="/:pageId" element={<Application/>} />
+          <Route exact path="/" element={<Application/>} />
+          <Route element={<Application/>} />
+        </Routes>
+      </BrowserRouter>
     </Provider>,
     document.getElementById("app")
   );

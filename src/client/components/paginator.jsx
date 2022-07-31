@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getNextPage, getPrevPage } from "../actions.js";
 
 
@@ -8,16 +8,16 @@ const Paginator = () => {
 
   const randomMode = useSelector((state) => state.randomMode);
 
+  const navigate = useNavigate();
+
   if(randomMode) return null;
 
-  const history = useHistory();
-
   const goNext = () => {
-    getNextPage(history);
+    getNextPage(navigate);
   }
 
   const goPrev = () => {
-    getPrevPage(history);
+    getPrevPage(navigate);
   }
 
   return (

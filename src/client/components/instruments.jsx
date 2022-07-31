@@ -1,16 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { changeSorting } from "../actions.js";
 
 const Instruments = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const randomMode = useSelector((state) => state.randomMode);
   const hasSearchText = useSelector((state) => !!state.searchText);
   const sortBy = useSelector((state) => state.sortBy);
 
   const handleSortingChange = (event) => {
-    changeSorting(event.target.value, history);
+    changeSorting(event.target.value, navigate);
   }
 
   if (randomMode) {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom";
 import {
   findFirstPageWithUntaggedImage,
@@ -8,14 +8,14 @@ import {
 
 const Header = () => {
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onFindFirstPageWithUntaggedImage = () => {
-    findFirstPageWithUntaggedImage(history);
+    findFirstPageWithUntaggedImage(navigate);
   }
 
   const onFindRandomImages = () => {
-    getRandomThumbnails(history);
+    getRandomThumbnails(navigate);
   }
 
   return (

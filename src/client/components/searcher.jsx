@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { search } from "../actions.js";
 
 
 const Searcher = () => {
   const searchText = useSelector((state) => state.searchText);
   const [savedSearchText, setSavedSearchText] = useState(searchText);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onSearch = (textToSearch) => {
-    search(textToSearch, history);
+    search(textToSearch, navigate);
   }
 
   const handleSearchTextChange = (event) => {

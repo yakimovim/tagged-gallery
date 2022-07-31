@@ -69,13 +69,13 @@ export function getFullImage(name) {
     });
 }
 
-export function getNextPage(history) {
+export function getNextPage(navigate) {
   const state = store.getState();
   if (state.pageIndex * state.pageSize <= state.total) {
     if (state.searchText != "") {
-      history.replace(`/${encodeURI(state.searchText)}/${state.pageIndex + 1}`);
+      navigate(`/${encodeURI(state.searchText)}/${state.pageIndex + 1}`, { replace: true });
     } else {
-      history.replace(`/${state.pageIndex + 1}`);
+      navigate(`/${state.pageIndex + 1}`, { replace: true });
     }
     retrieveThumbnails(
       state.searchText,
@@ -86,13 +86,13 @@ export function getNextPage(history) {
   }
 }
 
-export function getPrevPage(history) {
+export function getPrevPage(navigate) {
   const state = store.getState();
   if (state.pageIndex > 1) {
     if (state.searchText != "") {
-      history.replace(`/${encodeURI(state.searchText)}/${state.pageIndex - 1}`);
+      navigate(`/${encodeURI(state.searchText)}/${state.pageIndex - 1}`, { replace: true });
     } else {
-      history.replace(`/${state.pageIndex - 1}`);
+      navigate(`/${state.pageIndex - 1}`, { replace: true });
     }
     retrieveThumbnails(
       state.searchText,
@@ -121,39 +121,39 @@ function retrieveRandomThumbnails() {
     });
 }
 
-export function getRandomThumbnails(history) {
+export function getRandomThumbnails(navigate) {
   const state = store.getState();
 
   if (!state.randomMode) {
     if (state.searchText != "") {
-      history.replace(`/${encodeURI(state.searchText)}/random`);
+      navigate(`/${encodeURI(state.searchText)}/random`, { replace: true });
     } else {
-      history.replace(`/random`);
+      navigate(`/random`, { replace: true });
     }
   }
 
   retrieveRandomThumbnails();
 }
 
-export function search(searchText, history) {
+export function search(searchText, navigate) {
   store.dispatch({ type: ActionTypes.SET_RANDOM_MODE, randomMode: false });
   store.dispatch({ type: ActionTypes.SET_SEARCH_TEXT, searchText: searchText });
   const state = store.getState();
   if (searchText != "") {
-    history.replace(`/${encodeURI(searchText)}/1`);
+    navigate(`/${encodeURI(searchText)}/1`, { replace: true });
   } else {
-    history.replace(`/1`);
+    navigate(`/1`, { replace: true });
   }
   retrieveThumbnails(searchText, 0, state.pageSize, state.sortBy);
 }
 
-export function changeSorting(sortBy, history) {
+export function changeSorting(sortBy, navigate) {
   store.dispatch({ type: ActionTypes.SET_SORT_BY, sortBy: sortBy });
   const state = store.getState();
   if (state.searchText != "") {
-    history.replace(`/${encodeURI(state.searchText)}/${state.pageIndex}`);
+    navigate(`/${encodeURI(state.searchText)}/${state.pageIndex}`, { replace: true });
   } else {
-    history.replace(`/${state.pageIndex}`);
+    navigate(`/${state.pageIndex}`, { replace: true });
   }
   retrieveThumbnails(
     state.searchText,
@@ -163,7 +163,7 @@ export function changeSorting(sortBy, history) {
   );
 }
 
-export function findFirstPageWithUntaggedImage(history) {
+export function findFirstPageWithUntaggedImage(navigate) {
   store.dispatch({ type: ActionTypes.SET_SEARCH_TEXT, searchText: "" });
   store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.GETTINGS });
   const state = store.getState();
@@ -175,7 +175,7 @@ export function findFirstPageWithUntaggedImage(history) {
         total: data.total,
         thumbnails: data.items,
       });
-      history.replace(`/${toInteger(data.offset / data.limit) + 1}`);
+      navigate(`/${toInteger(data.offset / data.limit) + 1}`, { replace: true });
     })
     .catch(function () {
       store.dispatch({ type: ActionTypes.GET_THUMBNAILS_PAGE.FAILURE });
