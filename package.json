@@ -2,7 +2,7 @@
   "name": "tagged_gallery",
   "version": "1.1.0",
   "engines": {
-    "node": "18.4.0"
+    "node": "16.x"
   },
   "description": "Gallery of images which allow assigning multiple tags to an image",
   "main": "index.js",
