@@ -73,7 +73,7 @@ app.get('*', function (req, res) {
     res.sendFile(clientPath + '/index.html');
 });
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5678;
 app.listen(port, function () {
     console.log(`Listening on port ${port}...`);
 });

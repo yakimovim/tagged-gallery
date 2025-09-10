@@ -3,6 +3,8 @@ import _, { find } from "lodash";
 
 import config from "../config/configuration";
 
+const dbName = "taggedGallery"
+
 export default class MongoDbApi {
   _getMongoClient() {
     return MongoClient.connect(config.mongoDbUrl, {
@@ -14,7 +16,7 @@ export default class MongoDbApi {
   async getTagsOfFiles(fileNamesArray) {
     const client = await this._getMongoClient();
 
-    const db = client.db();
+    const db = client.db(dbName);
 
     const imageTags = db.collection(config.mongoDbCollection);
 
@@ -65,7 +67,7 @@ export default class MongoDbApi {
   async getFilesWithTags(tagsArray, limit, offset, sortBy = "name") {
     const client = await this._getMongoClient();
 
-    const db = client.db();
+    const db = client.db(dbName);
 
     const imageTags = db.collection(config.mongoDbCollection);
 
@@ -95,7 +97,7 @@ export default class MongoDbApi {
   async getRandomFiles(tagsArray, limit) {
     const client = await this._getMongoClient();
 
-    const db = client.db();
+    const db = client.db(dbName);
 
     const imageTags = db.collection(config.mongoDbCollection);
 
@@ -124,7 +126,7 @@ export default class MongoDbApi {
   async saveTags(name, tags) {
     const client = await this._getMongoClient();
 
-    const db = client.db();
+    const db = client.db(dbName);
 
     const imageTags = db.collection(config.mongoDbCollection);
 
