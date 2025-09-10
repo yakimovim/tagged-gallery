@@ -1,0 +1,45 @@
+# Please, build 'tagged-gallery' image from Dockerfile before running this file.
+
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mongo:
+    container_name: mongo
+    image: mongo:8.0.13-noble
+    restart: always
+    volumes:
+      - ${MONGO_FILES_DIR}:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:1.0.2-20-alpine3.19
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: pass
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+    depends_on:
+      - mongo
+
+  tagged-gallery:
+    container_name: tagged-gallery
+    image: tagged-gallery
+    ports:
+      - 5678:5678
+    environment:
+      PORT: 5678
+      YANDEX_CLIENT_ID: ${YANDEX_CLIENT_ID}
+      YANDEX_DISK_FOLDER: ${YANDEX_DISK_FOLDER}
+      MONGO_DB_URL: mongodb://root:example@mongo:27017/
+      MONGO_DB_COLLECTION: ${MONGO_DB_COLLECTION}
+    depends_on:
+      - mongo
