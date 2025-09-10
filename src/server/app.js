@@ -7,6 +7,15 @@ import TaggedGalleryApi from './api';
 
 import config from '../config/configuration';
 
+process.on('SIGTERM', function() {
+  console.log('SIGTERM received, shutting down...');
+  process.exit(0);
+});
+process.on('SIGINT', function() {
+  console.log('SIGINT received, shutting down...');
+  process.exit(0);
+});
+
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
